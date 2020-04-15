@@ -6,6 +6,15 @@
       xmlns:p="http://primefaces.org/ui">
 
 	<ui:composition>
+	
+		<style type="text/css">
+	    .old {
+	        background-color: #fca752 !important;
+	        background-image: none !important;
+	        color: #000000 !important;
+	    }
+	</style>
+	
 		<p:panel closable="true" header="#{vasessionbean.programName}">
 		<p:ajax event="close" listener="#{menubean.handleClose}" update=":mainCenterForm" />
 		<p:panelGrid>
@@ -214,7 +223,7 @@
 		<p:panelGrid id="orderStatust">
 			<p:row>
 				<p:column>
-					<p:dataTable resizableColumns="true" id="tblOrderStatus" var="r" value="#{orderbean.orderStatuss}"
+					<p:dataTable resizableColumns="true" id="tblOrderStatus" var="r"  value="#{orderbean.OrdersStatus}"
 						paginator="true" paginatorPosition="bottom" rows="15" rowKey="#{r.id}">
 						<p:column headerText="Status name">
 							<h:outputText value="#{r.statusName}" />
