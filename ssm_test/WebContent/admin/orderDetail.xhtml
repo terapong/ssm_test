@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<ui:composition>
+		<p:panel closable="true" header="#{vasessionbean.programName}">
+		<p:ajax event="close" listener="#{menubean.handleClose}" update=":mainCenterForm" />
+			<p:panelGrid style="width: 85%">
+				<p:row>
+					<p:column style="text-align: center">
+						<p:selectOneMenu id="selMaster" value="#{orderdetailbean.selectedMasterId}">
+							<f:selectItems value="#{orderdetailbean.master}" var="m"
+								itemLabel="#{m.shipName}" itemValue="#{m.id}" />
+							<p:ajax event="valueChange" listener="#{orderdetailbean.selMasterChange}" update="tblOrderDetail" process="@this" />
+						</p:selectOneMenu>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<p:panelGrid style="width: 85%">
+							<p:row>
+								<p:column>
+									<p:dataTable resizableColumns="true" id="tblOrderDetail" var="r" value="#{orderdetailbean.slave}"
+										paginator="true" paginatorPosition="bottom" rows="15"
+										selectionMode="single" selection="#{orderdetailbean.selectedRow}"
+										rowKey="#{r.id}">
+										<f:facet name="header">
+										<p:commandButton icon="ui-icon-plus" value="เพิ่ม"
+											actionListener="#{orderdetailbean.btnNewClick}"
+											oncomplete="PF('newOrderDetailDlg').show()" process="@this"
+											update=":mainCenterForm" resetValues="true" />
+										</f:facet>
+										<p:column headerText="Name">
+								            <h:outputText value="#{r.order.shipName}" />
+								        </p:column>
+								        <p:column headerText="Create Date">
+								            <h:outputText value="#{r.createDate}" >
+								            	<f:convertDateTime pattern="dd/MM/yyyy" />
+								            </h:outputText>
+								        </p:column>
+								        <p:column headerText="Update Date">
+								            <h:outputText value="#{r.updateDate}">
+								            	<f:convertDateTime pattern="dd/MM/yyyy" />
+								            </h:outputText>
+								        </p:column>
+								        <p:column headerText="Update user">
+								            <h:outputText value="#{r.createUser}" />
+								        </p:column>
+								        <p:column headerText="">
+								        	<p:commandLink value="แก้ไข" actionListener="#{orderdetailbean.btnEditClick(r)}" oncomplete="PF('newOrderDetailDlg').show()" process="@this" update=":mainCenterForm" resetValues="true"/>
+								        </p:column>
+										<p:column headerText="">
+											<p:commandLink value="ลบ" actionListener="#{orderdetailbean.btnDeleteClick(r)}" oncomplete="PF('confirmDeleteCarDialog').show()" process="@this" resetValues="true"/>
+										</p:column>
+									</p:dataTable>
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+		</p:panel>
+		
+		<p:confirmDialog message="คุณต้องการ ลบ ใช่หรือไม่ ?" closable="flase" header="ลบ" severity="alert" widgetVar="confirmDeleteCarDialog" appendTo="@(body)">  
+	  <p:commandButton value="ใช่" update=":mainCenterForm" onclick="PF('confirmDeleteCarDialog').hide()" actionListener="#{orderdetailbean.confirmDeleteClick}" process="@this" ajax="true" icon="ui-icon-check"/>  
+	  <p:commandButton value="ไม่ใช่" onclick="PF('confirmDeleteCarDialog').hide()" type="button"  icon="ui-icon-closethick"/>   
+  	</p:confirmDialog>
+  	
+  	<p:dialog id="newOrderDetailDlg" header="Order detail" widgetVar="newOrderDetailDlg"  modal="true" appendTo="@(body)" width="1100px" height="500px" closable="true">
+		<p:panelGrid id="orderDetail">
+			<p:row>
+				<p:column>
+					<h:outputText for="iventoryID" value="Iventory id:" />
+				</p:column>
+				<p:column>
+					<p:inputText value="#{orderdetailbean.selectedRow.inventoryId}"/>
+				</p:column>
+				<p:column>
+					<h:outputText value="Purchse order id" />
+				</p:column>
+				<p:column>
+					<p:inputText value="#{orderdetailbean.selectedRow.purchaseOrderId}"/>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText value="Quantity" />
+				</p:column>
+				<p:column>
+					<p:inputText value="#{orderdetailbean.selectedRow.quantity}"/>
+				</p:column>
+				<p:column>
+					<h:outputText value="Unit price" />
+				</p:column>
+				<p:column>
+					<p:inputText value="#{orderdetailbean.selectedRow.unitPrice}"/>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText value="Discount" />
+				</p:column>
+				<p:column>
+					<p:inputText value="#{orderdetailbean.selectedRow.discount}"/>
+				</p:column>
+				<p:column>
+					<h:outputText value="Allocated date" />
+				</p:column>
+				<p:column>	
+					<p:calendar id="orderDate" value="#{orderdetailbean.selectedRow.dateAllocated}" showOn="button" locale="th" navigator="true" pattern="dd/MMM/yyyy" />
+				</p:column>
+			</p:row>
+			<p:row>
+					<p:column colspan="2" style="text-align: center">
+						<p:commandButton value="บันทึก" icon="ui-icon-disk" actionListener="#{orderdetailbean.btnSaveClick}" update=":mainCenterForm" process="@this orderDetail" oncomplete="if (args.validationFailed) {PF('newOrderDetailDlg').show(); } else {PF('newOrderDetailDlg').hide(); }"/>
+						<p:commandButton value="ยกเลิก" icon="ui-icon-close" onclick="PF('newOrderDetailDlg').hide()"/>
+					</p:column>
+				</p:row>
+		</p:panelGrid>
+	</p:dialog>
+		
+	</ui:composition>
+</html>

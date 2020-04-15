@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<ui:composition>
+		<p:panel closable="true" header="#{vasessionbean.programName}">
+		<p:ajax event="close" listener="#{menubean.handleClose}" update=":mainCenterForm" />
+			<p:panelGrid>
+				<p:row>
+					<p:column>
+					<p:panelGrid>
+						<p:row>
+							<p:column>
+								<h:outputText value="บริษัท : " />
+							</p:column>
+							<p:column>
+								<p:selectOneMenu id="selMaster" value="#{dialyproductionreportbean.selectedMasterId}">
+									<f:selectItems value="#{dialyproductionreportbean.master}" var="m"
+										itemLabel="#{m.company}" itemValue="#{m.id}" />
+									<p:ajax event="valueChange" listener="#{dialyproductionreportbean.selMasterChange}" update="selSub" process="@this" />
+								</p:selectOneMenu>
+							</p:column>
+							<p:column>
+								<h:outputText value="           ลูกค้า : " />
+							</p:column>
+							<p:column>
+								<p:selectOneMenu id="selSub" value="#{dialyproductionreportbean.subCustomer}">
+									<f:selectItems value="#{dialyproductionreportbean.subCustomer}" var="sm"
+										itemLabel="#{sm.company}" itemValue="#{sm.id}" />
+									<p:ajax event="valueChange" listener="#{dialyproductionreportbean.selSubmanterChange}" update="tblDialyProductionReport" process="@this" />
+								</p:selectOneMenu>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<h:outputText value="จากวันที่: " />
+							</p:column>
+							<p:column>
+								<p:calendar showOn="button"/>
+							</p:column>
+							<p:column>
+							<h:outputText value="ถีงวันที่: " />
+							</p:column>
+							<p:column>
+								<p:calendar showOn="button"/>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:column>
+			</p:row>
+				<p:row>
+					<p:column>
+						<p:dataTable resizableColumns="true" id="tblDialyProductionReport" var="r" value="#{dialyproductionreportbean.master}"
+							paginator="true" paginatorPosition="bottom" rows="15"
+							selectionMode="single" selection="#{dialyproductionreportbean.selectedRow}"
+							rowKey="#{r.id}">
+								<f:facet name="header">
+									<p:commandButton 
+										icon="ui-icon-plus" value="เพิ่ม"
+										actionListener="#{dialyproductionreportbean.btnNewClick}"
+										oncomplete="PF('newObjectDlg').show()" process="@this"
+										update=":mainCenterForm" resetValues="true" />
+								</f:facet>
+						</p:dataTable>
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+		</p:panel>
+	</ui:composition>
+</html>

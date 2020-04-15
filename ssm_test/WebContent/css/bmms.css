@@ -1,0 +1,45 @@
+
+root { 
+    display: block;
+}
+.ui-widget {
+   font-size: 12px !important;
+}
+.ui-panelgrid > * > tr, .ui-panelgrid > * > tr > td.ui-panelgrid-cell {
+    border: none;
+    background: transparent !important;
+}
+.ui-selectonelistbox {
+	border: none;
+	background: transparent !important;
+}
+.ui-layout-north {
+    z-index:20 !important;
+    overflow:visible !important;
+}
+
+.ui-layout-north .ui-layout-unit-content {
+    overflow:visible !important;
+    background: transparent !important;
+}
+
+    .ui-datalist .ui-datalist-content {
+        border:0 none
+    }
+ 
+    .ui-datalist ul {
+        padding: 0px 10px 0 20px;
+        margin: 5px 0;
+    }
+ 
+    .value {
+        font-weight: bold;
+    }
+ 
+    .ui-autocomplete-itemtip {
+        -moz-box-sizing: content-box;
+        -webkit-box-sizing: content-box;
+        box-sizing: content-box;
+    }
+
+/* .ui-datatable table { width: auto !important; } */

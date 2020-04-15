@@ -1,0 +1,339 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<ui:composition>
+		<p:panel closable="true" header="#{vasessionbean.programName}">
+		<p:ajax event="close" listener="#{menubean.handleClose}" update=":mainCenterForm" />
+		<p:panelGrid>
+			<p:row>
+				<p:column>
+					<p:panelGrid style="width: 85%">
+						<p:row>
+							<p:column>
+								<p:dataTable resizableColumns="true" id="tblCustomer" var="r" value="#{customerbean.master}"
+									paginator="true" paginatorPosition="bottom" rows="15"
+									selectionMode="single" selection="#{customerbean.selectedRow}"
+									rowKey="#{r.id}">
+									<f:facet name="header">
+										<p:commandButton 
+											icon="ui-icon-plus" value="เพิ่ม"
+											actionListener="#{customerbean.btnNewClick}"
+											oncomplete="PF('newObjectDlg').show()" process="@this"
+											update=":mainCenterForm" resetValues="true" />
+									</f:facet>
+									<p:column headerText="ลูกค้าบริษัท" sortBy="#{r.customer.company}">
+										<h:outputText value="#{r.customer.company}" />
+									</p:column>
+									<p:column headerText="Name">
+										<h:outputText value="#{r.firstName}" />
+									</p:column>
+									<p:column headerText="Create Date">
+										<h:outputText value="#{r.updateDate}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</p:column>
+									<p:column headerText="Create user">
+										<h:outputText value="#{r.createUser}" />
+									</p:column>
+									<p:column headerText="">
+										<p:commandLink value="แก้ไข"
+											actionListener="#{customerbean.btnEditClick(r)}"
+											oncomplete="PF('newObjectDlg').show()" process="@this"
+											update=":mainCenterForm" resetValues="true" />
+									</p:column>
+									<p:column headerText="">
+										<p:commandLink value="เพิ่มรายชื่อลูกค้า"
+											actionListener="#{customerbean.btnAddSubCustomerClick(r)}"
+											oncomplete="PF('addSubCustomerDlg').show()" process="@this"
+											update=":mainCenterForm" resetValues="true" 
+											rendered="#{r.isHeadOffice}"/>
+									</p:column>
+									<p:column headerText="">
+										<p:commandLink value="เพิ่ม plant"
+											actionListener="#{customerbean.btnAddPlantClick(r)}"
+											oncomplete="PF('addPlantDlg').show()" process="@this"
+											update=":mainCenterForm" resetValues="true"/>
+									</p:column>
+									<p:column headerText="">
+										<p:commandLink value="ลบ"
+											rendered="#{r.renderedDelete}"
+											actionListener="#{customerbean.btnDeleteClick(r)}"
+											oncomplete="PF('confirmDeleteCarDialog').show()" process="@this"
+											resetValues="true"/>
+									</p:column>
+								</p:dataTable>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</p:panel>
+	
+	<p:confirmDialog message="คุณต้องการ ลบ ใช่หรือไม่ ?" closable="flase" header="ลบ" severity="alert" widgetVar="confirmDeleteCarDialog" appendTo="@(body)">  
+	  <p:commandButton value="ใช่" update=":mainCenterForm" onclick="PF('confirmDeleteCarDialog').hide()" actionListener="#{customerbean.confirmDeleteClick}" process="@this" ajax="true" icon="ui-icon-check"/>  
+	  <p:commandButton value="ไม่ใช่" onclick="PF('confirmDeleteCarDialog').hide()" type="button"  icon="ui-icon-closethick"/>   
+  	</p:confirmDialog> 
+  
+	<p:dialog id="addNewPlantDlg" header="รายชื่อ plant ปูน" widgetVar="addNewPlantDlg"  modal="true" appendTo="@(body)" width="600px" height="400px" closable="true">
+	  	<p:panelGrid id="panelAddNewPlantInput">
+	  	</p:panelGrid>
+	</p:dialog>	
+	
+  	<p:dialog id="addPlantDlg" header="รายชื่อ plant ปูน" widgetVar="addPlantDlg"  modal="true" appendTo="@(body)" width="700px" height="500px" closable="false">
+		<p:panelGrid id="panelAddPlantInput">
+			<p:row>
+				<p:column style="text-align: center;">
+					<h:outputText value="โรงงาน: #{customerbean.mainCustomer}" style="text-align: center; font-weight: bold; font-size: 150%"/>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<p:dataTable resizableColumns="true" id="tblplant" var="r" value="#{customerbean.plants}"
+						paginator="true" paginatorPosition="bottom" rows="15"
+						selectionMode="single" selection="#{customerbean.selectedRow}" rowKey="#{r.id}">
+						<f:facet name="header">
+							<p:commandButton 
+								icon="ui-icon-plus" value="เพิ่ม"
+								actionListener="#{customerbean.btnNewPlantClick}"
+								oncomplete="PF('addNewPlantDlg').show()" process="@this"
+								update=":mainCenterForm" resetValues="true" />
+						</f:facet>
+						<p:column headerText="Plant name">
+						fdsfsdf
+						</p:column>
+						<p:column headerText="Create date">
+						xxxx
+						</p:column>
+						<p:column headerText="Update date">
+						xxxx
+						</p:column>
+						<p:column headerText="Create user">
+						xxxx
+						</p:column>
+					</p:dataTable>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</p:dialog>
+  	
+  	<p:dialog id="addSubCustomerDlg" header="เพิ่มรายชื่อลูกค้า" widgetVar="addSubCustomerDlg"  modal="true" appendTo="@(body)" width="700px" height="500px" closable="true">
+		<p:panelGrid id="panelSubCustomerInput">
+		<p:row>
+			<p:column style="text-align: center;">
+				<h:outputText value="โรงงาน: #{customerbean.mainCustomer}" style="text-align: center; font-weight: bold; font-size: 150%"/>
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column>
+				<p:row>
+				<p:column>
+					<h:outputText for="firstName_sub" value="ชื่อ : " />
+				</p:column>
+				<p:column>
+					<p:inputText id="firstName_sub" value="#{customerbean.selectedRow.firstName}" required="true" requiredMessage="กรุณา กรอกรชื่อผู้ใช้งาน"/>
+				</p:column>
+				<p:column>
+					<h:outputText for="lastName_sub" value="นามสกุล : " />
+				</p:column>
+				<p:column>
+					<p:inputText id="lastName_sub" value="#{customerbean.selectedRow.lastName}" required="true" requiredMessage="กรุณา กรอกนามสกุล"/>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText for="mobilePhone_sub" value="เบอร์โทรมือถือ : " />
+				</p:column>
+				<p:column>
+					<p:inputText id="mobilePhone_sub" value="#{customerbean.selectedRow.mobilePhone}"/>
+				</p:column>
+				<p:column>
+					<h:outputText for="businessPhone_sub" value="เบอร์โทรที่ทำงาน : " />
+				</p:column>
+				<p:column>
+					<p:inputText id="businessPhone_sub" value="#{customerbean.selectedRow.businessPhone}"/>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText for="homePhone_sub" value="เบอร์โทรบ้าน: " />
+				</p:column>
+				<p:column>
+					<p:inputText id="homePhone_sub" value="#{customerbean.selectedRow.homePhone}"/>
+				</p:column>
+				<p:column>
+					<h:outputText for="faxPhone_sub" value="แฟกช์ : " />
+				</p:column>
+				<p:column>
+					<p:inputText id="faxPhone_sub" value="#{customerbean.selectedRow.faxNumber}"/>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText for="company_sub" value="ชื่อ บริษัท: " />
+				</p:column>
+				<p:column>
+					<p:inputText id="company_sub" value="#{customerbean.selectedRow.company}"/>
+				</p:column>
+				<p:column>
+					<h:outputText for="webpage_sub" value="website: " />
+				</p:column>
+				<p:column>
+					<p:inputText id="webpage_sub" value="#{customerbean.selectedRow.webPage}"/>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText for="email_sub" value="email: " />
+				</p:column>
+				<p:column>
+					<p:inputText id="email_sub" value="#{customerbean.selectedRow.emailAddress}"/>
+				</p:column>
+				<p:column>
+					<h:outputText for="customerCode_sub" value="รหัสลูกค้า: " />
+				</p:column>
+				<p:column>
+					<p:inputText id="customerCode_sub" value="#{customerbean.selectedRow.customerCode}"/>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText for="Address_sub" value="ที่อยู่ : " />
+				</p:column>
+				<p:column>
+					<p:inputTextarea id="Address_sub" value="#{customerbean.selectedRow.address}" required="true" requiredMessage="กรุณา กรอกที่อยู่"/>
+				</p:column>
+				<p:column>
+					<h:outputText for="customerUnit_sub" value="ชื่อหน่วยงาน: " />
+				</p:column>
+				<p:column>
+					<p:inputText id="customerUnit_sub" value="#{customerbean.selectedRow.companyUnit}"/>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText for="attachments_sub" value="Comment: " />
+				</p:column>
+				<p:column>
+					<p:inputTextarea id="attachments_sub" value="#{customerbean.selectedRow.notes}"/>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column colspan="2" style="text-align: center">
+					<p:commandButton value="บันทึก" icon="ui-icon-disk" actionListener="#{customerbean.btnSaveClick}" update=":mainCenterForm" process="@this panelSubCustomerInput" oncomplete="if (args.validationFailed) {PF('addSubCustomerDlg').show(); } else {PF('addSubCustomerDlg').hide(); }"/>
+					<p:commandButton value="ยกเลิก" icon="ui-icon-close" onclick="PF('addSubCustomerDlg').hide()"/>
+				</p:column>
+			</p:row>
+			</p:column>
+		</p:row>
+		</p:panelGrid>
+	</p:dialog>
+	
+  	<p:dialog id="newObjectDlg" header="เพิ่มรายชื่อลูกค้า" widgetVar="newObjectDlg"  modal="true" appendTo="@(body)" width="700px" height="500px" closable="true">
+		<p:panelGrid id="panelInput">
+			<p:row>
+				<p:column>
+					<h:outputText for="firstName" value="ชื่อ : " />
+				</p:column>
+				<p:column>
+					<p:inputText id="firstName" value="#{customerbean.selectedRow.firstName}" required="true" requiredMessage="กรุณา กรอกรชื่อผู้ใช้งาน"/>
+				</p:column>
+				<p:column>
+					<h:outputText for="lastName" value="นามสกุล : " />
+				</p:column>
+				<p:column>
+					<p:inputText id="lastName" value="#{customerbean.selectedRow.lastName}" required="true" requiredMessage="กรุณา กรอกนามสกุล"/>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText for="mobilePhone" value="เบอร์โทรมือถือ : " />
+				</p:column>
+				<p:column>
+					<p:inputText id="mobilePhone" value="#{customerbean.selectedRow.mobilePhone}"/>
+				</p:column>
+				<p:column>
+					<h:outputText for="businessPhone" value="เบอร์โทรที่ทำงาน : " />
+				</p:column>
+				<p:column>
+					<p:inputText id="businessPhone" value="#{customerbean.selectedRow.businessPhone}"/>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText for="homePhone" value="เบอร์โทรบ้าน: " />
+				</p:column>
+				<p:column>
+					<p:inputText id="homePhone" value="#{customerbean.selectedRow.homePhone}"/>
+				</p:column>
+				<p:column>
+					<h:outputText for="faxPhone" value="แฟกช์ : " />
+				</p:column>
+				<p:column>
+					<p:inputText id="faxPhone" value="#{customerbean.selectedRow.faxNumber}"/>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText for="company" value="ชื่อ บริษัท: " />
+				</p:column>
+				<p:column>
+					<p:inputText id="company" value="#{customerbean.selectedRow.company}"/>
+				</p:column>
+				<p:column>
+					<h:outputText for="webpage" value="website: " />
+				</p:column>
+				<p:column>
+					<p:inputText id="webpage" value="#{customerbean.selectedRow.webPage}"/>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText for="email" value="email: " />
+				</p:column>
+				<p:column>
+					<p:inputText id="email" value="#{customerbean.selectedRow.emailAddress}"/>
+				</p:column>
+				<p:column>
+					<h:outputText for="customerCode" value="รหัสลูกค้า: " />
+				</p:column>
+				<p:column>
+					<p:inputText id="customerCode" value="#{customerbean.selectedRow.customerCode}"/>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText for="Address" value="ที่อยู่ : " />
+				</p:column>
+				<p:column>
+					<p:inputTextarea id="Address" value="#{customerbean.selectedRow.address}" required="true" requiredMessage="กรุณา กรอกที่อยู่"/>
+				</p:column>
+				<p:column>
+					<h:outputText for="customerUnit" value="ชื่อหน่วยงาน: " />
+				</p:column>
+				<p:column>
+					<p:inputText id="customerUnit" value="#{customerbean.selectedRow.companyUnit}"/>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText for="attachments" value="Comment: " />
+				</p:column>
+				<p:column>
+					<p:inputTextarea id="attachments" value="#{customerbean.selectedRow.notes}"/>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column colspan="2" style="text-align: center">
+					<p:commandButton value="บันทึก" icon="ui-icon-disk" actionListener="#{customerbean.btnSaveClick}" update=":mainCenterForm" process="@this panelInput" oncomplete="if (args.validationFailed) {PF('newObjectDlg').show(); } else {PF('newObjectDlg').hide(); }"/>
+					<p:commandButton value="ยกเลิก" icon="ui-icon-close" onclick="PF('newObjectDlg').hide()"/>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</p:dialog>
+	</ui:composition>
+</html>

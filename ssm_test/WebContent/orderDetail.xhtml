@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+      
+<ui:composition>
+	<p:panel closable="true" header="#{vasessionbean.programName}">
+		<p:ajax event="close" listener="#{menubean.handleClose}"  update=":mainCenterForm"/>
+		<p:panelGrid style="width: 80%">
+			<p:row>
+				<p:column style="text-align: center">
+					<p:selectOneMenu id="selMaster"
+						value="#{orderdetailbean.selectedMasterId}">
+						<f:selectItems value="#{orderdetailbean.master}" var="m"
+							itemLabel="#{m.orderNo}" itemValue="#{m.id}" />
+						<p:ajax event="valueChange" listener="#{orderdetailbean.selMasterChange}" update="tblOrderDetail" process="@this" />
+					</p:selectOneMenu>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<p:panelGrid style="width: 85%">
+						<p:row>
+							<p:column>
+								<p:dataTable resizableColumns="true" id="tblOrderDetail" var="r" value="#{orderdetailbean.slave}"
+									paginator="true" paginatorPosition="bottom" rows="15"
+									selectionMode="single" selection="#{orderdetailbean.selectedRow}"
+									rowKey="#{r.id}">
+									<f:facet name="header">
+										<p:commandButton 
+											icon="ui-icon-plus" value="เพิ่ม"
+											actionListener="#{orderdetailbean.btnNewClick}"
+											oncomplete="PF('newObjectDlg').show()" process="@this"
+											update=":mainCenterForm" resetValues="true" />
+									</f:facet>
+									<p:column headerText="Id">
+										<h:outputText value="#{r.id}" />
+									</p:column>
+								</p:dataTable>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</p:panel>
+</ui:composition>
+</html>

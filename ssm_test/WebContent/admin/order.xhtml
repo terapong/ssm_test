@@ -1,0 +1,311 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<ui:composition>
+		<p:panel closable="true" header="#{vasessionbean.programName}">
+		<p:ajax event="close" listener="#{menubean.handleClose}" update=":mainCenterForm" />
+		<p:panelGrid>
+			<p:row>
+				<p:column>
+					<p:panelGrid style="width: 85%">
+						<p:row>
+							<p:column>
+								<p:dataTable resizableColumns="true" id="tblOrder" var="r" value="#{orderbean.slave}"
+									paginator="true" paginatorPosition="bottom" rows="15"
+									selectionMode="single" selection="#{orderbean.selectedRow}"
+									rowKey="#{r.id}" rowStyleClass="#{car.year le 1990 ? 'old' : null}">
+									<f:facet name="header">
+										<p:commandButton con="ui-icon-plus" value="เพิ่ม"
+											actionListener="#{orderbean.btnNewClick}"
+											oncomplete="PF('newObjectDlg').show()" process="@this"
+											update=":mainCenterForm" resetValues="true" />
+									</f:facet>
+									<p:column headerText="Order name">
+										<h:outputText value="#{r.shipName}" />
+									</p:column>
+									<p:column headerText="Order date">
+										<h:outputText value="#{r.orderDate}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</p:column>
+									<p:column headerText="Paid date">
+										<h:outputText value="#{r.paidDate}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</p:column>
+									<p:column headerText="Shipped date">
+										<h:outputText value="#{r.shippedDate}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</p:column>
+									<p:column headerText="recipe">
+										<h:outputText value="#{r.recipe}" />
+									</p:column>
+									<p:column headerText="qty">
+										<h:outputText value="#{r.qty}" />
+									</p:column>
+									<p:column headerText="">
+										<p:commandLink value="Order status"
+											actionListener="#{orderbean.btnOrderStatusClick(r)}"
+											oncomplete="PF('orderStatustDlg').show()" process="@this"
+											update=":mainCenterForm" resetValues="true"/>
+									</p:column>
+									<p:column>
+										<h:commandButton value="Export Excel" action="#{docket.exportExcel()}" ajax="false"/>
+									</p:column>
+									<p:column headerText="">
+										<p:commandLink value="แก้ไข"
+											actionListener="#{orderbean.btnEditClick(r)}"
+											oncomplete="PF('newObjectDlg').show()" process="@this"
+											update=":mainCenterForm" resetValues="true" />
+									</p:column>
+								</p:dataTable>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</p:panel>
+	
+	<p:confirmDialog message="คุณต้องการ ลบ ใช่หรือไม่ ?" closable="flase" header="ลบ" severity="alert" widgetVar="confirmDeleteCarDialog" appendTo="@(body)">  
+	  <p:commandButton value="ใช่" update=":mainCenterForm" onclick="PF('confirmDeleteCarDialog').hide()" actionListener="#{orderbean.confirmDeleteClick}" process="@this" ajax="true" icon="ui-icon-check"/>  
+	  <p:commandButton value="ไม่ใช่" onclick="PF('confirmDeleteCarDialog').hide()" type="button"  icon="ui-icon-closethick"/>   
+  	</p:confirmDialog>
+  	
+	
+  	
+  	<p:dialog id="newObjectDlg" header="New orders" widgetVar="newObjectDlg"  modal="true" appendTo="@(body)" width="700px" height="500px" closable="true">
+			<p:panelGrid id="panelInput">
+				<p:row>
+					<p:column>
+						<h:outputText for="shipName" value="Order : " />
+					</p:column>
+					<p:column>
+						<p:inputText id="shipName" value="#{orderbean.selectedRow.shipName}" required="true" requiredMessage="กรุณา กรอกชื่อหมายเลข การสั้ง"/>
+					</p:column>
+					<p:column>
+						<h:outputText for="orderDate" value="Order date : " />
+					</p:column>
+					<p:column>
+						<p:calendar id="orderDate" value="#{orderbean.selectedRow.orderDate}" showOn="button" locale="th" navigator="true" pattern="dd/MMM/yyyy" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<h:outputText for="paidDate" value="Paid date : " />
+					</p:column>
+					<p:column>
+						<p:calendar id="paidDate" value="#{orderbean.selectedRow.paidDate}" showOn="button" locale="th" navigator="true" pattern="dd/MMM/yyyy" />
+					</p:column>
+					<p:column>
+						<h:outputText for="shipDate" value="Ship Date: " />
+					</p:column>
+					<p:column>
+						<p:calendar id="shipDate" value="#{orderbean.selectedRow.shippedDate}" showOn="button" locale="th" navigator="true" pattern="dd/MMM/yyyy" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<h:outputText for="shipAddress" value="Ship address: " />
+					</p:column>
+					<p:column>
+						<p:inputTextarea id="shipAddress" value="#{orderbean.selectedRow.shipAddress}"/>
+					</p:column>
+					<p:column>
+						<h:outputText for="paymentType" value="Payment type : " />
+					</p:column>
+					<p:column>
+						<p:inputText id="paymentType" value="#{orderbean.selectedRow.paymentType}"/>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<h:outputText for="shipCity" value="Ship city: " />
+					</p:column>
+					<p:column>
+						<p:inputText id="shipCity" value="#{orderbean.selectedRow.shipCity}"/>
+					</p:column>	
+					<p:column>
+						<h:outputText for="shipCountry" value="Ship country: " />
+					</p:column>
+					<p:column>
+						<p:inputText id="shipCountry" value="#{orderbean.selectedRow.shipCountryRegion}"/>
+					</p:column>		
+				</p:row>
+				<p:row>
+					<p:column>
+						<h:outputText for="shipStartProvince" value="Ship province: " />
+					</p:column>
+					<p:column>
+						<p:inputText id="shipStartProvince" value="#{orderbean.selectedRow.shipStateProvince}"/>
+					</p:column>
+					<p:column>
+						<h:outputText for="shipPostalcode" value="Ship postalcode: " />
+					</p:column>
+					<p:column>
+						<p:inputText id="shipPostalcode" value="#{orderbean.selectedRow.shipZipPostalCode}"/>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<h:outputText for="notes" value="notes: " />
+					</p:column>
+					<p:column>
+						<p:inputTextarea id="notes" value="#{orderbean.selectedRow.notes}"/>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<h:outputText for="recipe" value="recipe: " />
+					</p:column>
+					<p:column>
+						<p:inputText id="recipe" value="#{orderbean.selectedRow.recipe}"/>
+					</p:column>
+					<p:column>
+						<h:outputText for="qty" value="qty: " />
+					</p:column>
+					<p:column>
+						<p:inputText id="qty" value="#{orderbean.selectedRow.qty}"/>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<h:outputText for="selOrderStatus" value="Order status : " />
+					</p:column>
+					<p:column>
+						<p:selectOneMenu id="selOrderStatus" value="#{orderbean.orderStatusID}">
+							<f:selectItems value="#{orderbean.orderStatuss}"  var="os" itemLabel="#{os.statusName}" itemValue="#{os.id}" />
+							<p:ajax event="valueChange" listener="#{orderbean.selOrderStatusChange}" update="panelInput" process="@this" />
+						</p:selectOneMenu>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column colspan="2" style="text-align: center">
+						<p:commandButton value="บันทึก" icon="ui-icon-disk" actionListener="#{orderbean.btnSaveClick}" update=":mainCenterForm" process="@this panelInput" oncomplete="if (args.validationFailed) {PF('newObjectDlg').show(); } else {PF('newObjectDlg').hide(); }"/>
+						<p:commandButton value="ยกเลิก" icon="ui-icon-close" onclick="PF('newObjectDlg').hide()"/>
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+	</p:dialog>
+	
+	<p:dialog id="docketReportDlg" header="Export docket status" widgetVar="docketReportDlg"  modal="true" appendTo="@(body)" width="700px" height="500px" closable="true">
+		<p:panelGrid id="docketReport">
+			<p:panelGrid id="exportDocketReport">
+				<p:row>
+					<p:column>
+						<h1>Docket report export</h1>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+					<p:commandButton value="Exportar Excel" actionListener = "#{orderbean.exportoExcel}"/>
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+		</p:panelGrid>
+	</p:dialog>
+	
+	<p:dialog id="orderStatustDlg" header="Curent status" widgetVar="orderStatustDlg"  modal="true" appendTo="@(body)" width="700px" height="500px" closable="true">
+		<p:panelGrid id="orderStatust">
+			<p:row>
+				<p:column>
+					<p:dataTable resizableColumns="true" id="tblOrderStatus" var="r" value="#{orderbean.orderStatuss}"
+						paginator="true" paginatorPosition="bottom" rows="15" rowKey="#{r.id}">
+						<p:column headerText="Status name">
+							<h:outputText value="#{r.statusName}" />
+						</p:column>
+					</p:dataTable>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</p:dialog>	
+	
+	<p:dialog id="editOrderDetailDlg" header="Order detail" widgetVar="editOrderDetailDlg"  modal="true" appendTo="@(body)" width="1100px" height="500px" closable="true">
+	
+	</p:dialog>
+	
+	<p:dialog id="orderDetailDlg" header="Order detail" widgetVar="orderDetailDlg"  modal="true" appendTo="@(body)" width="1100px" height="500px" closable="true">
+		<p:panelGrid id="orderDetail">
+			<p:row>
+				<p:column>
+					<p:dataTable widgetVar="tblOrderDetail" resizableColumns="true" id="tblOrderDetail" var="r" value="#{orderbean.orderDetails}"
+						paginator="true" paginatorPosition="bottom" rows="15" rowKey="#{r.id}" editable="true" style="margin-bottom:20px">
+						<p:column headerText="Iventory id">
+							<h:outputText value="#{r.inventoryId}" />
+						</p:column>
+						<p:column headerText="Purchse order id">
+							<h:outputText value="#{r.purchaseOrderId}" />
+						</p:column>
+						<p:column headerText="Quantity">
+							<h:outputText value="#{r.quantity}"/>
+						</p:column>
+						<p:column headerText="Unit price">
+							<h:outputText value="#{r.unitPrice}"/>
+						</p:column>
+						<p:column headerText="Discount">
+							<h:outputText value="#{r.discount}"/>
+						</p:column>
+						<p:column headerText="Allocated date">
+							<h:outputText value="#{r.dateAllocated}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+						</p:dataTable>
+						</p:column>
+						</p:row>
+			</p:panelGrid>
+			<p:panelGrid>
+					<p:row>
+						<p:column>
+							<h:outputText for="iventoryID" value="Iventory id:" />
+						</p:column>
+						<p:column>
+							<p:inputText id="iventoryID" value="#{orderbean.inventoryID}"/>
+						</p:column>
+						<p:column>
+							<h:outputText value="Purchse order id" />
+						</p:column>
+						<p:column>
+						
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText value="Quantity" />
+						</p:column>
+						<p:column>
+						</p:column>
+						<p:column>
+							<h:outputText value="Unit price" />
+						</p:column>
+						<p:column>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText value="Discount" />
+						</p:column>
+						<p:column>
+						</p:column>
+						<p:column>
+							<h:outputText value="Allocated date" />
+						</p:column>
+						<p:column>	
+						</p:column>
+					</p:row>
+					<p:row>
+				<p:column>
+					<p:commandButton con="ui-icon-plus" value="Add order detail"
+						actionListener="#{orderbean.btnNewOrderDetailClick(r)}"
+						process="@this" update=":tblOrderDetail" resetValues="true" oncomplete= "PF('tblOrderDetail').addRow()" />
+				</p:column>
+				</p:row>
+				</p:panelGrid>
+	</p:dialog>
+	</ui:composition>
+</html>
