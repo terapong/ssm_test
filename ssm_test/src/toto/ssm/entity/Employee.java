@@ -5,10 +5,6 @@ import javax.persistence.*;
 import java.util.List;
 import java.util.Date;
 
-/**
- * The persistent class for the employees database table.
- * 
- */
 @Entity
 @Table(name="employees")
 public class Employee implements Serializable {

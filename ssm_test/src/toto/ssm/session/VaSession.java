@@ -121,8 +121,6 @@ public class VaSession implements Serializable {
 		return em.find(OrdersStatus.class, id );
 	}
 	
-	
-	
 	public void updateOrderStatus(OrdersStatus c) {
 		em.merge(c);
 	}

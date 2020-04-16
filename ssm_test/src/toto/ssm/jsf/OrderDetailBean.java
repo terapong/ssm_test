@@ -37,7 +37,7 @@ public class OrderDetailBean implements Serializable {
 	private void init() {
 		cal = Calendar.getInstance();
 		master = session.querryAllOrder();
-		if(selectedMaster == null) {
+		if(selectedMaster != null) {
 			selectedMaster = master.get(0);
 			//selectedRow = selectedMaster.getEmployees().get(0);
 		}

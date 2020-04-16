@@ -22,10 +22,14 @@
 					            <h:outputText value="#{r.statusName}" />
 					        </p:column>
 					        <p:column headerText="Create Date">
-					            <h:outputText value="#{r.createDate}" />
+					            <h:outputText value="#{r.createDate}">
+					            	<f:convertDateTime pattern="dd/MM/yyyy" />
+					            </h:outputText>
 					        </p:column>
 					        <p:column headerText="Update Date">
-					            <h:outputText value="#{r.updateDate}" />
+					            <h:outputText value="#{r.updateDate}">
+					            <f:convertDateTime pattern="dd/MM/yyyy" />
+					            </h:outputText>
 					        </p:column>
 					        <p:column headerText="Create user">
 					            <h:outputText value="#{r.createUser}" />
