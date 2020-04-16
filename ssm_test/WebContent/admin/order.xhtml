@@ -6,15 +6,6 @@
       xmlns:p="http://primefaces.org/ui">
 
 	<ui:composition>
-	
-		<style type="text/css">
-	    .old {
-	        background-color: #fca752 !important;
-	        background-image: none !important;
-	        color: #000000 !important;
-	    }
-	</style>
-	
 		<p:panel closable="true" header="#{vasessionbean.programName}">
 		<p:ajax event="close" listener="#{menubean.handleClose}" update=":mainCenterForm" />
 		<p:panelGrid>
@@ -57,11 +48,8 @@
 									<p:column headerText="qty">
 										<h:outputText value="#{r.qty}" />
 									</p:column>
-									<p:column headerText="">
-										<p:commandLink value="Order status"
-											actionListener="#{orderbean.btnOrderStatusClick(r)}"
-											oncomplete="PF('orderStatustDlg').show()" process="@this"
-											update=":mainCenterForm" resetValues="true"/>
+									<p:column headerText="Order status">
+										<h:outputText value="#{r.orderStatus.statusName}" />
 									</p:column>
 									<p:column>
 										<h:commandButton value="Export Excel" action="#{docket.exportExcel()}" ajax="false"/>
@@ -85,8 +73,6 @@
 	  <p:commandButton value="ใช่" update=":mainCenterForm" onclick="PF('confirmDeleteCarDialog').hide()" actionListener="#{orderbean.confirmDeleteClick}" process="@this" ajax="true" icon="ui-icon-check"/>  
 	  <p:commandButton value="ไม่ใช่" onclick="PF('confirmDeleteCarDialog').hide()" type="button"  icon="ui-icon-closethick"/>   
   	</p:confirmDialog>
-  	
-	
   	
   	<p:dialog id="newObjectDlg" header="New orders" widgetVar="newObjectDlg"  modal="true" appendTo="@(body)" width="700px" height="500px" closable="true">
 			<p:panelGrid id="panelInput">
@@ -202,42 +188,6 @@
 			</p:panelGrid>
 	</p:dialog>
 	
-	<p:dialog id="docketReportDlg" header="Export docket status" widgetVar="docketReportDlg"  modal="true" appendTo="@(body)" width="700px" height="500px" closable="true">
-		<p:panelGrid id="docketReport">
-			<p:panelGrid id="exportDocketReport">
-				<p:row>
-					<p:column>
-						<h1>Docket report export</h1>
-					</p:column>
-				</p:row>
-				<p:row>
-					<p:column>
-					<p:commandButton value="Exportar Excel" actionListener = "#{orderbean.exportoExcel}"/>
-					</p:column>
-				</p:row>
-			</p:panelGrid>
-		</p:panelGrid>
-	</p:dialog>
-	
-	<p:dialog id="orderStatustDlg" header="Curent status" widgetVar="orderStatustDlg"  modal="true" appendTo="@(body)" width="700px" height="500px" closable="true">
-		<p:panelGrid id="orderStatust">
-			<p:row>
-				<p:column>
-					<p:dataTable resizableColumns="true" id="tblOrderStatus" var="r"  value="#{orderbean.OrdersStatus}"
-						paginator="true" paginatorPosition="bottom" rows="15" rowKey="#{r.id}">
-						<p:column headerText="Status name">
-							<h:outputText value="#{r.statusName}" />
-						</p:column>
-					</p:dataTable>
-				</p:column>
-			</p:row>
-		</p:panelGrid>
-	</p:dialog>	
-	
-	<p:dialog id="editOrderDetailDlg" header="Order detail" widgetVar="editOrderDetailDlg"  modal="true" appendTo="@(body)" width="1100px" height="500px" closable="true">
-	
-	</p:dialog>
-	
 	<p:dialog id="orderDetailDlg" header="Order detail" widgetVar="orderDetailDlg"  modal="true" appendTo="@(body)" width="1100px" height="500px" closable="true">
 		<p:panelGrid id="orderDetail">
 			<p:row>
@@ -316,5 +266,27 @@
 				</p:row>
 				</p:panelGrid>
 	</p:dialog>
+	
+	<p:dialog id="docketReportDlg" header="Export docket status" widgetVar="docketReportDlg"  modal="true" appendTo="@(body)" width="700px" height="500px" closable="true">
+		<p:panelGrid id="docketReport">
+			<p:panelGrid id="exportDocketReport">
+				<p:row>
+					<p:column>
+						<h1>Docket report export</h1>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+					<p:commandButton value="Exportar Excel" actionListener = "#{orderbean.exportoExcel}"/>
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+		</p:panelGrid>
+	</p:dialog>
+	
+	<p:dialog id="editOrderDetailDlg" header="Order detail" widgetVar="editOrderDetailDlg"  modal="true" appendTo="@(body)" width="1100px" height="500px" closable="true">
+	
+	</p:dialog>
+	
 	</ui:composition>
 </html>

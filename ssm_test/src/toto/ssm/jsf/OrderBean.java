@@ -47,6 +47,7 @@ public class OrderBean implements Serializable {
 	private List<OrdersStatus> orderStatuss;
 	private OrdersStatus selectOrderStatus;
 	private Long orderStatusID;
+	private String orderStatusName;
 	private Connection conn;
 	private List<OrderDetail> orderDetails;
 	private OrderDetail orderDetail;
@@ -83,8 +84,18 @@ public class OrderBean implements Serializable {
 			slave = session.querryAllOrderByCustomerID(selectedMaster.getId());
 			selectedMasterId = selectedMaster.getId();
 			
-			orderDetails = session.queryAllOrderDetails();
+//			orderDetails = session.queryAllOrderDetails();
 			
+			orderStatuss = session.querryAllOrdersStatus();
+			if(!orderStatuss.isEmpty()) {
+				selectOrderStatus = orderStatuss.get(0);
+				orderStatusID = selectOrderStatus.getId();
+				orderStatusName = selectOrderStatus.getStatusName();
+				System.out.println("int OrderStatusChange: " + orderStatusID);
+			} else {
+				System.out.println("orderStatuss empty ");
+			}
+//			
 //			try {
 //				Class.forName(MYSQL_DRIVER);
 //				conn = DriverManager.getConnection(MYSQL_URL, MYSQL_USER, MYSQL_PASS);
@@ -100,15 +111,6 @@ public class OrderBean implements Serializable {
 //					r.setRenderedDelete("true");
 //				}
 //			}
-		}
-		
-		orderStatuss = session.querryAllOrdersStatus();
-		if(!orderStatuss.isEmpty()) {
-			selectOrderStatus = orderStatuss.get(0);
-			orderStatusID = selectOrderStatus.getId();
-			System.out.println("int OrderStatusChange: " + orderStatusID);
-		} else {
-			System.out.println("orderStatuss empty ");
 		}
 	}
 	
@@ -242,8 +244,8 @@ public class OrderBean implements Serializable {
 		selectedRow.setCustomer(selectedMaster);
 		selectedRow.setCreateDate(cal.getTime());
 		selectedRow.setUpdateDate(cal.getTime());
-		//selectedRow.setCreateUser(vasessionbean.getUsername());
-		selectedRow.setCurrentStatus(1L);
+//		selectedRow.setCreateUser(vasessionbean.getUsername());
+//		selectedRow.setCurrentStatus(1L);
 	}
 	
 	public void btnAddDocketClick(Order r) {
@@ -259,13 +261,12 @@ public class OrderBean implements Serializable {
 			//selectedRow.getOrdersStatuss().add(selectOrderStatus);
 			selectedRow.setEmployee(null);
 			selectedRow.setTaxes(null);
+			selectedRow.setOrderStatus(selectOrderStatus);
 			session.updateOrders(selectedRow);
-			session.addOrderToOrderStatusNew(selectedRow, selectOrderStatus);
-			//Order tempOrder = session.querryOrderById(id)
 		} catch(Exception ex) {
 			ex.printStackTrace();
 		}
-		init();
+		init(); 
 	}
 	
 	public void btnOrderStatusClick(Order o) {
@@ -277,7 +278,7 @@ public class OrderBean implements Serializable {
 			System.out.println(os.getStatusName());
 		}
 		
-		System.out.println("Current status : " + selectedRow.getCurrentStatus());
+		System.out.println("Current status : " + selectedRow.getOrderStatus().getStatusName());
 		//slave order = selectedMaster.getOrders;
 	}
 	
@@ -287,6 +288,7 @@ public class OrderBean implements Serializable {
 
 	public void btnEditClick(Order o) {
 		selectedRow = o;
+		orderStatusID = selectedRow.getOrderStatus().getId();
 	}
 	
 	public void confirmDeleteClick() {
@@ -536,4 +538,11 @@ public class OrderBean implements Serializable {
 		this.discount = discount;
 	}
 
+	public String getOrderStatusName() {
+		return orderStatusName;
+	}
+
+	public void setOrderStatusName(String orderStatusName) {
+		this.orderStatusName = orderStatusName;
+	}
 }

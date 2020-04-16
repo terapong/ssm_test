@@ -88,8 +88,8 @@ public class Order implements Serializable {
 	@Temporal(value= TemporalType.TIMESTAMP)
 	private Date updateDate;
 	
-	@Column(name="current_status")
-	private Long currentStatus;
+//	@Column(name="current_status")
+//	private Long currentStatus;
 	
 	@Column(name="order_no")
 	private String orderNo;
@@ -122,16 +122,21 @@ public class Order implements Serializable {
 	@JoinColumn(name="order_detail_id")
 	private List<OrderDetail> ordersDetail;
 	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="order_status_id")
+	private OrdersStatus orderStatus;
+
+	
 	public Order() {
 	}
 
-	public Long getCurrentStatus() {
-		return currentStatus;
-	}
-
-	public void setCurrentStatus(Long currentStatus) {
-		this.currentStatus = currentStatus;
-	}
+//	public Long getCurrentStatus() {
+//		return currentStatus;
+//	}
+//
+//	public void setCurrentStatus(Long currentStatus) {
+//		this.currentStatus = currentStatus;
+//	}
 
 	public long getId() {
 		return this.id;
@@ -392,5 +397,13 @@ public class Order implements Serializable {
 
 	public void setRecipe(String recipe) {
 		this.recipe = recipe;
+	}
+
+	public OrdersStatus getOrderStatus() {
+		return orderStatus;
+	}
+
+	public void setOrderStatus(OrdersStatus orderStatus) {
+		this.orderStatus = orderStatus;
 	}
 }
