@@ -3,6 +3,7 @@ package toto.ssm.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="formula")
@@ -36,6 +37,9 @@ public class Formula implements Serializable {
 	
 	@Column(name="create_user")
 	private String createUser;
+	
+	@OneToMany(mappedBy = "formular", fetch = FetchType.EAGER)
+	private List<Moist> moists;
 
 	public long getId() {
 		return id;

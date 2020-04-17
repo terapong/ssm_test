@@ -15,7 +15,7 @@
             <property name="hibernate.show_sql" value="true" />
             <property name="hibernate.format_sql" value="false" />
             <!-- Drop and then re-create the database schema (don't do this in production)  -->
-            <property name="hibernate.hbm2ddl.auto" value="none" /> 
+            <property name="hibernate.hbm2ddl.auto" value="create" /> 
         </properties>
     </persistence-unit>
 </persistence>
