@@ -30,6 +30,36 @@ public class MenuBean implements Serializable{
 		return "main?facesRedirect=true";
 	}
 	
+	public String cemtMXClick() {
+		vaSessionbean.setProgramName("CemtMX data");
+		vaSessionbean.setContentCenter("admin/cemtMX.xhtml");
+		return "main?facesRedirect=true";
+	}
+	
+	public String siloClickClick() {
+		vaSessionbean.setProgramName("Silo data");
+		vaSessionbean.setContentCenter("admin/Silo.xhtml");
+		return "main?facesRedirect=true";
+	}
+	
+	public String admixSPClickClick() {
+		vaSessionbean.setProgramName("AdmixSP data");
+		vaSessionbean.setContentCenter("admin/AdmixSP.xhtml");
+		return "main?facesRedirect=true";
+	}
+	
+	public String moistClick() {
+		vaSessionbean.setProgramName("Moist data");
+		vaSessionbean.setContentCenter("admin/Moist.xhtml");
+		return "main?facesRedirect=true";
+	}
+	
+	public String unitClick() {
+		vaSessionbean.setProgramName("Unit data");
+		vaSessionbean.setContentCenter("admin/Unit.xhtml");
+		return "main?facesRedirect=true";
+	}
+	
 	public String privilegeClick() {
 		vaSessionbean.setProgramName("Privilege data");
 		vaSessionbean.setContentCenter("admin/privilege.xhtml");
@@ -37,7 +67,7 @@ public class MenuBean implements Serializable{
 	}
 	
 	public String formularClick() {
-		vaSessionbean.setProgramName("Employee data");
+		vaSessionbean.setProgramName("Formular data");
 		vaSessionbean.setContentCenter("admin/formular.xhtml");
 		return "main?facesRedirect=true";
 	}

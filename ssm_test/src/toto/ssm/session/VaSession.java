@@ -19,6 +19,74 @@ public class VaSession implements Serializable {
 //	public XtblDocket querryXtblDocketByOrderID(Long id) {
 //		return (XtblDocket) em.createNativeQuery("select * from xtbl_docket where order_id = " + id, XtblDocket.class).getSingleResult();
 //	}
+	
+	public List<CemtMX> querryAllCemtMX() {
+		return em.createNativeQuery("select * from cemtmx", CemtMX.class).getResultList();
+	}
+	
+	public CemtMX querryCemtMXById(long id) {
+		return em.find(CemtMX.class, id);
+	}
+	
+	public void updateCemtMX(CemtMX r) {
+		em.merge(r);
+	}
+	
+	public void deleteCemtMX(CemtMX r) throws Exception {
+		r = querryCemtMXById(r.getId());
+		em.remove(r);
+	}
+	
+	public List<Moist> querryAllMoist() {
+		return em.createNativeQuery("select * from moist", Formula.class).getResultList();
+	}
+	
+	public Moist querryMoistById(long id) {
+		return em.find(Moist.class, id);
+	}
+	
+	public void updateFormula(Moist r) {
+		em.merge(r);
+	}
+	
+	public void deleteFormula(Moist r) throws Exception {
+		r = querryMoistById(r.getId());
+		em.remove(r);
+	}
+	
+	public List<Formula> querryAllFormular() {
+		return em.createNativeQuery("select * from formula", Formula.class).getResultList();
+	}
+	
+	public Formula querryFormulaById(long id) {
+		return em.find(Formula.class, id);
+	}
+	
+	public void updateFormula(Formula r) {
+		em.merge(r);
+	}
+	
+	public void deleteFormula(Formula r) throws Exception {
+		r = querryFormulaById(r.getId());
+		em.remove(r);
+	}
+	
+	public List<Unit> querryAllUnit() {
+		return em.createNativeQuery("select * from unit", Unit.class).getResultList();
+	}
+	
+	public Unit querryUnitById(long id) {
+		return em.find(Unit.class, id);
+	}
+	
+	public void updateUnit(Unit r) {
+		em.merge(r);
+	}
+	
+	public void deleteUnit(Unit r) throws Exception {
+		r = querryUnitById(r.getId());
+		em.remove(r);
+	}
 
 	public List<Privilege> querryAllPrivilege() {
 		return em.createNativeQuery("select * from privileges", Privilege.class).getResultList();

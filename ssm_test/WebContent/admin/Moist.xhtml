@@ -11,9 +11,9 @@
 			<p:panelGrid style="width: 85%">
 				<p:row>
 					<p:column>
-						<p:dataTable resizableColumns="true" id="tblFormula" var="r" value="#{formulabean.formulas}" paginator="true" paginatorPosition="bottom" rows="15" selectionMode="single" selection="#{formulabean.selectedRow}" rowKey="#{r.id}">
+						<p:dataTable resizableColumns="true" id="tblFormula" var="r" value="#{moistbean.formulas}" paginator="true" paginatorPosition="bottom" rows="15" selectionMode="single" selection="#{moistbean.selectedRow}" rowKey="#{r.id}">
 					        <f:facet name="header">
-					            <p:commandButton icon="ui-icon-plus" value="เพิ่ม" actionListener="#{formulabean.btnNewClick}" oncomplete="PF('newObjectDlg').show()" process="@this" update=":mainCenterForm" resetValues="true"/>
+					            <p:commandButton icon="ui-icon-plus" value="เพิ่ม" actionListener="#{moistbean.btnNewClick}" oncomplete="PF('newObjectDlg').show()" process="@this" update=":mainCenterForm" resetValues="true"/>
 					        </f:facet>
 					        <p:column headerText="Name">
 					            <h:outputText value="#{r.name}" />
@@ -35,10 +35,10 @@
 					            <h:outputText value="#{r.createUser}" />
 					        </p:column>
 							<p:column headerText="">
-					        	<p:commandLink value="แก้ไข" actionListener="#{formulabean.btnEditClick(r)}" oncomplete="PF('newObjectDlg').show()" process="@this" update=":mainCenterForm" resetValues="true"/>
+					        	<p:commandLink value="แก้ไข" actionListener="#{moistbean.btnEditClick(r)}" oncomplete="PF('newObjectDlg').show()" process="@this" update=":mainCenterForm" resetValues="true"/>
 					        </p:column>
 							<p:column headerText="">
-								<p:commandLink value="ลบ" actionListener="#{formulabean.btnDeleteClick(r)}" oncomplete="PF('confirmDeleteCarDialog').show()" process="@this" resetValues="true"/>
+								<p:commandLink value="ลบ" actionListener="#{moistbean.btnDeleteClick(r)}" oncomplete="PF('confirmDeleteCarDialog').show()" process="@this" resetValues="true"/>
 							</p:column>
 				    	</p:dataTable>
 					</p:column>
@@ -47,7 +47,7 @@
 		</p:panel>
 		
 		<p:confirmDialog message="คุณต้องการ ลบ ใช่หรือไม่ ?" closable="flase" header="ลบ" severity="alert" widgetVar="confirmDeleteCarDialog" appendTo="@(body)">  
-		  <p:commandButton value="ใช่" update=":mainCenterForm" onclick="PF('confirmDeleteCarDialog').hide()" actionListener="#{formulabean.confirmDeleteClick}" process="@this" ajax="true" icon="ui-icon-check"/>  
+		  <p:commandButton value="ใช่" update=":mainCenterForm" onclick="PF('confirmDeleteCarDialog').hide()" actionListener="#{moistbean.confirmDeleteClick}" process="@this" ajax="true" icon="ui-icon-check"/>  
 		  <p:commandButton value="ไม่ใช่" onclick="PF('confirmDeleteCarDialog').hide()" type="button"  icon="ui-icon-closethick"/>   
 	    </p:confirmDialog>
 	    
@@ -56,16 +56,16 @@
 				<p:row>
 					<p:column>
 						<h:outputText value="Unit name : " />
-						<p:inputText value="#{formulabean.selectedRow.name}"/>
+						<p:inputText value="#{moistbean.selectedRow.name}"/>
 					</p:column>
 				</p:row>
 				<p:row>
 					<p:column>
 						<h:outputText value="Value : " />
-						<p:inputText value="#{formulabean.selectedRow.value}"/>
+						<p:inputText value="#{moistbean.selectedRow.value}"/>
 					</p:column>
 				</p:row>
-				<p:commandButton value="บันทึก" icon="ui-icon-disk" actionListener="#{formulabean.btnSaveClick}" update=":mainCenterForm" process="@this panelInput" oncomplete="if (args.validationFailed) {PF('newObjectDlg').show(); } else {PF('newObjectDlg').hide(); }"/>
+				<p:commandButton value="บันทึก" icon="ui-icon-disk" actionListener="#{moistbean.btnSaveClick}" update=":mainCenterForm" process="@this panelInput" oncomplete="if (args.validationFailed) {PF('newObjectDlg').show(); } else {PF('newObjectDlg').hide(); }"/>
 				<p:commandButton value="ยกเลิก" icon="ui-icon-close" onclick="PF('newObjectDlg').hide()"/>
 			</h:panelGrid>
 		</p:dialog>
