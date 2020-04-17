@@ -3,11 +3,16 @@ package toto.ssm.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
@@ -45,6 +50,10 @@ public class CemtMX implements Serializable {
 	
 	@Column(name="create_user")
 	private String createUser;
+	
+	@OneToMany(cascade={CascadeType.ALL})
+    @JoinColumn (name="cemtmx_id")
+	private List<Formula> formulars;
 
 	public long getId() {
 		return id;
@@ -76,5 +85,29 @@ public class CemtMX implements Serializable {
 
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Integer getValue() {
+		return value;
+	}
+
+	public void setValue(Integer value) {
+		this.value = value;
+	}
+
+	public List<Formula> getFormulars() {
+		return formulars;
+	}
+
+	public void setFormulars(List<Formula> formulars) {
+		this.formulars = formulars;
 	}
 }
