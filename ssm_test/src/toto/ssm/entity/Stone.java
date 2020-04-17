@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
@@ -53,6 +54,10 @@ public class Stone implements Serializable {
 	@OneToMany(cascade={CascadeType.ALL})
     @JoinColumn (name="stone_id")
 	private List<Formula> formulars;
+	
+	@OneToOne(cascade={CascadeType.ALL})
+	 @JoinColumn (name="unit_id")
+	private Unit unit;
 	
 	public long getId() {
 		return id;
