@@ -20,8 +20,59 @@ public class VaSession implements Serializable {
 //		return (XtblDocket) em.createNativeQuery("select * from xtbl_docket where order_id = " + id, XtblDocket.class).getSingleResult();
 //	}
 	
+	public List<Stone> querryAllStone() {
+		return em.createNativeQuery("select * from stone", Stone.class).getResultList();
+	}
+	
+	public Stone querryStoneById(long id) {
+		return em.find(Stone.class, id);
+	}
+	
+	public void updateStone(Stone r) {
+		em.merge(r);
+	}
+	
+	public void deleteStone(Stone r) throws Exception {
+		r = querryStoneById(r.getId());
+		em.remove(r);
+	}
+	
+	public List<Sand> querryAllSand() {
+		return em.createNativeQuery("select * from sand", Sand.class).getResultList();
+	}
+	
+	public Sand querrySandById(long id) {
+		return em.find(Sand.class, id);
+	}
+	
+	public void updateSand(Sand r) {
+		em.merge(r);
+	}
+	
+	public void deleteSand(Sand r) throws Exception {
+		r = querrySandById(r.getId());
+		em.remove(r);
+	}
+	
+	public List<CemtSP> querryAllCemtSP() {
+		return em.createNativeQuery("select * from cemtsp", CemtSP.class).getResultList();
+	}
+	
+	public CemtSP querryCemtSPById(long id) {
+		return em.find(CemtSP.class, id);
+	}
+	
+	public void updateCemtSP(CemtSP r) {
+		em.merge(r);
+	}
+	
+	public void deleteCemtSP(CemtSP r) throws Exception {
+		r = querryCemtSPById(r.getId());
+		em.remove(r);
+	}
+	
 	public List<AggSP> querryAllAggSP() {
-		return em.createNativeQuery("select * from aggsp", CemtMX.class).getResultList();
+		return em.createNativeQuery("select * from aggsp", AggSP.class).getResultList();
 	}
 	
 	public AggSP querryAggSPById(long id) {

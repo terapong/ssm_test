@@ -30,6 +30,18 @@ public class MenuBean implements Serializable{
 		return "main?facesRedirect=true";
 	}
 	
+	public String SandClick() {
+		vaSessionbean.setProgramName("Sand data");
+		vaSessionbean.setContentCenter("admin/Sand.xhtml");
+		return "main?facesRedirect=true";
+	}
+	
+	public String StoneClick() {
+		vaSessionbean.setProgramName("Sone data");
+		vaSessionbean.setContentCenter("admin/Stone.xhtml");
+		return "main?facesRedirect=true";
+	}
+	
 	public String AggSPClick() {
 		vaSessionbean.setProgramName("AggSP data");
 		vaSessionbean.setContentCenter("admin/AggSP.xhtml");
@@ -40,6 +52,12 @@ public class MenuBean implements Serializable{
 	public String cemtMXClick() {
 		vaSessionbean.setProgramName("CemtMX data");
 		vaSessionbean.setContentCenter("admin/cemtMX.xhtml");
+		return "main?facesRedirect=true";
+	}
+	
+	public String cemtSPClick() {
+		vaSessionbean.setProgramName("CemtSP data");
+		vaSessionbean.setContentCenter("admin/cemtSP.xhtml");
 		return "main?facesRedirect=true";
 	}
 	
