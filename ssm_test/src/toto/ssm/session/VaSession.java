@@ -20,6 +20,23 @@ public class VaSession implements Serializable {
 //		return (XtblDocket) em.createNativeQuery("select * from xtbl_docket where order_id = " + id, XtblDocket.class).getSingleResult();
 //	}
 	
+	public List<AggSP> querryAllAggSP() {
+		return em.createNativeQuery("select * from aggsp", CemtMX.class).getResultList();
+	}
+	
+	public AggSP querryAggSPById(long id) {
+		return em.find(AggSP.class, id);
+	}
+	
+	public void updateAggSP(AggSP r) {
+		em.merge(r);
+	}
+	
+	public void deleteAggSP(AggSP r) throws Exception {
+		r = querryAggSPById(r.getId());
+		em.remove(r);
+	}
+	
 	public List<CemtMX> querryAllCemtMX() {
 		return em.createNativeQuery("select * from cemtmx", CemtMX.class).getResultList();
 	}

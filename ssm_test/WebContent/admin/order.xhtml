@@ -13,6 +13,17 @@
 				<p:column>
 					<p:panelGrid style="width: 85%">
 						<p:row>
+							<p:column style="text-align: center">
+								<h:outputText value="Customer: " />
+								<p:selectOneMenu id="selMaster"
+									value="#{orderbean.selectedMasterId}">
+									<f:selectItems value="#{orderbean.master}" var="m"
+										itemLabel="#{m.company}" itemValue="#{m.id}" />
+									<p:ajax event="valueChange" listener="#{orderbean.selMasterChange}" update="tblOrder" process="@this" />
+								</p:selectOneMenu>
+							</p:column>
+						</p:row>
+						<p:row>
 							<p:column>
 								<p:dataTable resizableColumns="true" id="tblOrder" var="r" value="#{orderbean.slave}"
 									paginator="true" paginatorPosition="bottom" rows="15"

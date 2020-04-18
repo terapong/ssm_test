@@ -324,6 +324,7 @@ public class OrderBean implements Serializable {
 	public void selMasterChange() {
 		selectedMaster = session.querryCustomerById(selectedMasterId);
 		subCustomer = session.querryAllCustomerByMasterID(selectedMaster.getId());
+		slave = selectedMaster.getOrders();
 	}
 	
 //	public void selMasterChange() {

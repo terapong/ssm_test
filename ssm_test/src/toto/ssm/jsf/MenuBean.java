@@ -30,6 +30,13 @@ public class MenuBean implements Serializable{
 		return "main?facesRedirect=true";
 	}
 	
+	public String AggSPClick() {
+		vaSessionbean.setProgramName("AggSP data");
+		vaSessionbean.setContentCenter("admin/AggSP.xhtml");
+		return "main?facesRedirect=true";
+	}
+	
+	
 	public String cemtMXClick() {
 		vaSessionbean.setProgramName("CemtMX data");
 		vaSessionbean.setContentCenter("admin/cemtMX.xhtml");
