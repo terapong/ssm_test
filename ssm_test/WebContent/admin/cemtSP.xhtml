@@ -19,7 +19,7 @@
 					            <h:outputText value="#{r.name}" />
 					        </p:column>
 					        <p:column headerText="Unit">
-					            <h:outputText value="#{r.value}" />
+					            <h:outputText value="#{r.unit}" />
 					        </p:column>
 					        <p:column headerText="Create Date">
 					            <h:outputText value="#{r.createDate}">
@@ -55,14 +55,14 @@
 			<h:panelGrid columns="2" id="panelInput">
 				<p:row>
 					<p:column>
-						<h:outputText value="Unit name : " />
+						<h:outputText value="CemtSP name : " />
 						<p:inputText value="#{cementspbean.selectedRow.name}"/>
 					</p:column>
 				</p:row>
 				<p:row>
 					<p:column>
-						<h:outputText value="Value : " />
-						<p:inputText value="#{cementspbean.selectedRow.value}"/>
+						<h:outputText value="Unit : " />
+						<p:inputText value="#{cementspbean.selectedRow.unit}"/>
 					</p:column>
 				</p:row>
 				<p:commandButton value="บันทึก" icon="ui-icon-disk" actionListener="#{cementspbean.btnSaveClick}" update=":mainCenterForm" process="@this panelInput" oncomplete="if (args.validationFailed) {PF('newObjectDlg').show(); } else {PF('newObjectDlg').hide(); }"/>

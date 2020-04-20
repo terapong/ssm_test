@@ -8,7 +8,7 @@
 	<ui:composition>
 		<p:panel closable="true" header="#{vasessionbean.programName}">
 			<p:ajax event="close" listener="#{menubean.handleClose}"  update=":mainCenterForm"/>
-			<p:panelGrid style="width: 85%">
+			<p:panelGrid style="width: 80%">
 				<p:row>
 					<p:column>
 						<p:dataTable resizableColumns="true" id="tbCemtMX" var="r" value="#{cemtmxbean.cemtMXs}" paginator="true" paginatorPosition="bottom" rows="15" selectionMode="single" selection="#{cemtmxbean.selectedRow}" rowKey="#{r.id}">
@@ -19,7 +19,7 @@
 					            <h:outputText value="#{r.name}" />
 					        </p:column>
 					        <p:column headerText="Unit">
-					            <h:outputText value="#{r.value}" />
+					            <h:outputText value="#{r.unit}" />
 					        </p:column>
 					        <p:column headerText="Create Date">
 					            <h:outputText value="#{r.createDate}">
@@ -61,8 +61,8 @@
 				</p:row>
 				<p:row>
 					<p:column>
-						<h:outputText value="Value : " />
-						<p:inputText value="#{cemtmxbean.selectedRow.value}"/>
+						<h:outputText value="Unit : " />
+						<p:inputText value="#{cemtmxbean.selectedRow.unit}"/>
 					</p:column>
 				</p:row>
 				<p:commandButton value="บันทึก" icon="ui-icon-disk" actionListener="#{cemtmxbean.btnSaveClick}" update=":mainCenterForm" process="@this panelInput" oncomplete="if (args.validationFailed) {PF('newObjectDlg').show(); } else {PF('newObjectDlg').hide(); }"/>

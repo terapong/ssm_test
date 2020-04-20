@@ -13,7 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
@@ -56,12 +55,23 @@ public class CemtMX implements Serializable {
     @JoinColumn (name="cemtmx_id")
 	private List<Formula> formulars;
 	
-	@OneToOne(cascade={CascadeType.ALL})
-	 @JoinColumn (name="unit_id")
-	private Unit unit;
+	@Column(name="unit")
+	private Integer unit;
+	
+//	@OneToOne(cascade={CascadeType.ALL})
+//	 @JoinColumn (name="unit_id")
+//	private Unit unit;
 
 	public long getId() {
 		return id;
+	}
+
+	public Integer getUnit() {
+		return unit;
+	}
+
+	public void setUnit(Integer unit) {
+		this.unit = unit;
 	}
 
 	public void setId(long id) {

@@ -12,7 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
@@ -51,13 +50,12 @@ public class Moist implements Serializable {
 	@Column(name="create_user")
 	private String createUser;
 	
+	@Column(name="unit")
+	private Integer unit;
+	
 	@OneToMany(cascade={CascadeType.ALL})
     @JoinColumn (name="moist_id")
 	private List<Formula> formulars;
-	
-	@OneToOne(cascade={CascadeType.ALL})
-	 @JoinColumn (name="unit_id")
-	private Unit unit;
 	
 	public long getId() {
 		return id;
@@ -113,5 +111,13 @@ public class Moist implements Serializable {
 
 	public void setFormulars(List<Formula> formulars) {
 		this.formulars = formulars;
+	}
+
+	public Integer getUnit() {
+		return unit;
+	}
+
+	public void setUnit(Integer unit) {
+		this.unit = unit;
 	}
 }

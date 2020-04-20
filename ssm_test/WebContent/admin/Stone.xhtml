@@ -11,7 +11,7 @@
 			<p:panelGrid style="width: 85%">
 				<p:row>
 					<p:column>
-						<p:dataTable resizableColumns="true" id="tblSand" var="r" value="#{stonebean.stones}" paginator="true" paginatorPosition="bottom" rows="15" selectionMode="single" selection="#{stonebean.selectedRow}" rowKey="#{r.id}">
+						<p:dataTable resizableColumns="true" id="tblStone" var="r" value="#{stonebean.stones}" paginator="true" paginatorPosition="bottom" rows="15" selectionMode="single" selection="#{stonebean.selectedRow}" rowKey="#{r.id}">
 					        <f:facet name="header">
 					            <p:commandButton icon="ui-icon-plus" value="เพิ่ม" actionListener="#{stonebean.btnNewClick}" oncomplete="PF('newObjectDlg').show()" process="@this" update=":mainCenterForm" resetValues="true"/>
 					        </f:facet>
@@ -19,7 +19,7 @@
 					            <h:outputText value="#{r.name}" />
 					        </p:column>
 					        <p:column headerText="Unit">
-					            <h:outputText value="#{r.value}" />
+					            <h:outputText value="#{r.unit}" />
 					        </p:column>
 					        <p:column headerText="Create Date">
 					            <h:outputText value="#{r.createDate}">
@@ -55,14 +55,14 @@
 			<h:panelGrid columns="2" id="panelInput">
 				<p:row>
 					<p:column>
-						<h:outputText value="Unit name : " />
+						<h:outputText value="name : " />
 						<p:inputText value="#{stonebean.selectedRow.name}"/>
 					</p:column>
 				</p:row>
 				<p:row>
 					<p:column>
-						<h:outputText value="Value : " />
-						<p:inputText value="#{stonebean.selectedRow.value}"/>
+						<h:outputText value="Unit : " />
+						<p:inputText value="#{stonebean.selectedRow.unit}"/>
 					</p:column>
 				</p:row>
 				<p:commandButton value="บันทึก" icon="ui-icon-disk" actionListener="#{stonebean.btnSaveClick}" update=":mainCenterForm" process="@this panelInput" oncomplete="if (args.validationFailed) {PF('newObjectDlg').show(); } else {PF('newObjectDlg').hide(); }"/>

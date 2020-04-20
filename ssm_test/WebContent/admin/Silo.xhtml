@@ -6,6 +6,68 @@
       xmlns:p="http://primefaces.org/ui">
 
 	<ui:composition>
-		<p:editor/>
+		<p:panel closable="true" header="#{vasessionbean.programName}">
+			<p:ajax event="close" listener="#{menubean.handleClose}"  update=":mainCenterForm"/>
+			<p:panelGrid style="width: 80%">
+				<p:row>
+					<p:column>
+						<p:dataTable resizableColumns="true" id="tblSilo" var="r" value="#{silobean.silos}" paginator="true" paginatorPosition="bottom" rows="15" selectionMode="single" selection="#{silobean.selectedRow}" rowKey="#{r.id}">
+					        <f:facet name="header">
+					            <p:commandButton icon="ui-icon-plus" value="เพิ่ม" actionListener="#{silobean.btnNewClick}" oncomplete="PF('newObjectDlg').show()" process="@this" update=":mainCenterForm" resetValues="true"/>
+					        </f:facet>
+					        <p:column headerText="Name">
+					            <h:outputText value="#{r.name}" />
+					        </p:column>
+					        <p:column headerText="Unit">
+					            <h:outputText value="#{r.unit}" />
+					        </p:column>
+					        <p:column headerText="Create Date">
+					            <h:outputText value="#{r.createDate}">
+					            	<f:convertDateTime pattern="dd/MM/yyyy" />
+					            </h:outputText>
+					        </p:column>
+					        <p:column headerText="Update Date">
+					            <h:outputText value="#{r.updateDate}">
+					            	<f:convertDateTime pattern="dd/MM/yyyy" />
+					            </h:outputText>
+					        </p:column>
+					        <p:column headerText="Update user">
+					            <h:outputText value="#{r.createUser}" />
+					        </p:column>
+							<p:column headerText="">
+					        	<p:commandLink value="แก้ไข" actionListener="#{silobean.btnEditClick(r)}" oncomplete="PF('newObjectDlg').show()" process="@this" update=":mainCenterForm" resetValues="true"/>
+					        </p:column>
+							<p:column headerText="">
+								<p:commandLink value="ลบ" actionListener="#{silobean.btnDeleteClick(r)}" oncomplete="PF('confirmDeleteCarDialog').show()" process="@this" resetValues="true"/>
+							</p:column>
+				    	</p:dataTable>
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+		</p:panel>
+		
+		<p:confirmDialog message="คุณต้องการ ลบ ใช่หรือไม่ ?" closable="flase" header="ลบ" severity="alert" widgetVar="confirmDeleteCarDialog" appendTo="@(body)">  
+		  <p:commandButton value="ใช่" update=":mainCenterForm" onclick="PF('confirmDeleteCarDialog').hide()" actionListener="#{silobean.confirmDeleteClick}" process="@this" ajax="true" icon="ui-icon-check"/>  
+		  <p:commandButton value="ไม่ใช่" onclick="PF('confirmDeleteCarDialog').hide()" type="button"  icon="ui-icon-closethick"/>   
+	    </p:confirmDialog>
+	    
+	    <p:dialog id="newObjectDlg" header="เพิ่ม #{vasessionbean.programName}" widgetVar="newObjectDlg"  modal="true" appendTo="@(body)" width="700px" height="500px" closable="true">
+			<h:panelGrid columns="2" id="panelInput">
+				<p:row>
+					<p:column>
+						<h:outputText value="name : " />
+						<p:inputText value="#{silobean.selectedRow.name}"/>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<h:outputText value="Unit : " />
+						<p:inputText value="#{silobean.selectedRow.unit}"/>
+					</p:column>
+				</p:row>
+				<p:commandButton value="บันทึก" icon="ui-icon-disk" actionListener="#{silobean.btnSaveClick}" update=":mainCenterForm" process="@this panelInput" oncomplete="if (args.validationFailed) {PF('newObjectDlg').show(); } else {PF('newObjectDlg').hide(); }"/>
+				<p:commandButton value="ยกเลิก" icon="ui-icon-close" onclick="PF('newObjectDlg').hide()"/>
+			</h:panelGrid>
+		</p:dialog>
 	</ui:composition>
 </html>

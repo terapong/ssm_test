@@ -19,7 +19,7 @@
 					            <h:outputText value="#{r.name}" />
 					        </p:column>
 					        <p:column headerText="Unit">
-					            <h:outputText value="#{r.value}" />
+					            <h:outputText value="#{r.unit}" />
 					        </p:column>
 					        <p:column headerText="Create Date">
 					            <h:outputText value="#{r.createDate}">
@@ -62,7 +62,7 @@
 				<p:row>
 					<p:column>
 						<h:outputText value="Value : " />
-						<p:inputText value="#{sandbean.selectedRow.value}"/>
+						<p:inputText value="#{sandbean.selectedRow.unit}"/>
 					</p:column>
 				</p:row>
 				<p:commandButton value="บันทึก" icon="ui-icon-disk" actionListener="#{sandbean.btnSaveClick}" update=":mainCenterForm" process="@this panelInput" oncomplete="if (args.validationFailed) {PF('newObjectDlg').show(); } else {PF('newObjectDlg').hide(); }"/>

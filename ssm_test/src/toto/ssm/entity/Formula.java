@@ -36,6 +36,9 @@ public class Formula implements Serializable {
 	
 	@Column(name="create_user")
 	private String createUser;
+	
+	@Column(name="unit")
+	private Integer unit;
 
 	public long getId() {
 		return id;
@@ -83,5 +86,13 @@ public class Formula implements Serializable {
 
 	public void setValue(Integer value) {
 		this.value = value;
+	}
+
+	public Integer getUnit() {
+		return unit;
+	}
+
+	public void setUnit(Integer unit) {
+		this.unit = unit;
 	}
 }

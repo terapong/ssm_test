@@ -106,18 +106,18 @@ public class VaSession implements Serializable {
 	}
 	
 	public List<Moist> querryAllMoist() {
-		return em.createNativeQuery("select * from moist", Formula.class).getResultList();
+		return em.createNativeQuery("select * from moist", Moist.class).getResultList();
 	}
 	
 	public Moist querryMoistById(long id) {
 		return em.find(Moist.class, id);
 	}
 	
-	public void updateFormula(Moist r) {
+	public void updateMoist(Moist r) {
 		em.merge(r);
 	}
 	
-	public void deleteFormula(Moist r) throws Exception {
+	public void deleteMoist(Moist r) throws Exception {
 		r = querryMoistById(r.getId());
 		em.remove(r);
 	}
@@ -136,6 +136,23 @@ public class VaSession implements Serializable {
 	
 	public void deleteFormula(Formula r) throws Exception {
 		r = querryFormulaById(r.getId());
+		em.remove(r);
+	}
+	
+	public List<Silo> querryAllSilo() {
+		return em.createNativeQuery("select * from silo", Silo.class).getResultList();
+	}
+	
+	public Silo querrySiloById(long id) {
+		return em.find(Silo.class, id);
+	}
+	
+	public void updateSilo(Silo r) {
+		em.merge(r);
+	}
+	
+	public void deleteSilo(Silo r) throws Exception {
+		r = querrySiloById(r.getId());
 		em.remove(r);
 	}
 	
