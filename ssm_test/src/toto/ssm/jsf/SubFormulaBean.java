@@ -13,15 +13,17 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import toto.ssm.entity.Formula;
+import toto.ssm.entity.*;
 import toto.ssm.session.VaSession;
 
-@ManagedBean(name = "formulabean")
+@ManagedBean(name = "subformulabean")
 @ViewScoped
-public class FormulaBean implements Serializable {
+public class SubFormulaBean implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private List<Formula> master;
-	private List<Formula> slave;
+	private List<Customer> customers;
+	private Customer selectedCustomer;
+	private Long selectedCustomerID;
+	private List<Formula> masters;
 	//private List<Plants> plants;
 	//private Plants selectedPlan;
 	private Formula selectedRow;
@@ -35,7 +37,9 @@ public class FormulaBean implements Serializable {
 	@PostConstruct
 	private void init() {
 		cal = Calendar.getInstance();
-		master = session.querryAllFormular();
+		customers = session.querryAllCustomer();
+		selectedCustomer = customers.get(0);
+		masters = session.querryAllFormular();
 //		for(Formula m : master) {
 //			slave = session.querryAllFormularByMasterID(m.getId());
 //			if(slave.isEmpty()) {
@@ -83,6 +87,34 @@ public class FormulaBean implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 	}
+	
+	public Customer getSelectedCustomer() {
+		return selectedCustomer;
+	}
+
+	public void setSelectedCustomer(Customer selectedCustomer) {
+		this.selectedCustomer = selectedCustomer;
+	}
+
+	public void selCustomerChange() {
+		selectedCustomer = session.querryCustomerById(selectedCustomerID);
+//		masters = session.querryAllFormularByMasterID(id)
+//		for(Employee r : slave) {
+//			if(r.getUserName().equals("admin")) {
+//				r.setRenderedDelete("false");
+//			} else {
+//				r.setRenderedDelete("true");
+//			}
+//		}
+	}
+
+	public Formula getSelectedRow() {
+		return selectedRow;
+	}
+
+	public void setSelectedRow(Formula selectedRow) {
+		this.selectedRow = selectedRow;
+	}
 
 	public VaSessionbean getVasessionbean() {
 		return vasessionbean;
@@ -100,27 +132,27 @@ public class FormulaBean implements Serializable {
 		this.session = session;
 	}
 
-	public Formula getSelectedRow() {
-		return selectedRow;
+	public List<Customer> getCustomers() {
+		return customers;
 	}
 
-	public void setSelectedRow(Formula selectedRow) {
-		this.selectedRow = selectedRow;
+	public void setCustomers(List<Customer> customers) {
+		this.customers = customers;
 	}
 
-	public List<Formula> getMaster() {
-		return master;
+	public List<Formula> getMasters() {
+		return masters;
 	}
 
-	public void setMaster(List<Formula> master) {
-		this.master = master;
+	public void setMasters(List<Formula> masters) {
+		this.masters = masters;
 	}
 
-	public List<Formula> getSlave() {
-		return slave;
+	public Long getSelectedCustomerID() {
+		return selectedCustomerID;
 	}
 
-	public void setSlave(List<Formula> slave) {
-		this.slave = slave;
+	public void setSelectedCustomerID(Long selectedCustomerID) {
+		this.selectedCustomerID = selectedCustomerID;
 	}
 }

@@ -111,7 +111,18 @@ public class Customer implements Serializable{
 
     @OneToMany(mappedBy="customer", cascade = CascadeType.ALL)
     private Set<Customer> customers = new HashSet<Customer>();
-	
+    
+    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
+	private List<Formula> Formulas;
+    
+	public List<Formula> getFormulas() {
+		return Formulas;
+	}
+
+	public void setFormulas(List<Formula> formulas) {
+		Formulas = formulas;
+	}
+
 	public String getRenderedDelete() {
 		return renderedDelete;
 	}

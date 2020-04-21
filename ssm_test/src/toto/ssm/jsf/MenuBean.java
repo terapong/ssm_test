@@ -36,6 +36,12 @@ public class MenuBean implements Serializable{
 		return "main?facesRedirect=true";
 	}
 	
+	public String subFormularClick() {
+		vaSessionbean.setProgramName("Sub formular data");
+		vaSessionbean.setContentCenter("admin/SubFormular.xhtml");
+		return "main?facesRedirect=true";
+	}
+	
 	public String StoneClick() {
 		vaSessionbean.setProgramName("Sone data");
 		vaSessionbean.setContentCenter("admin/Stone.xhtml");

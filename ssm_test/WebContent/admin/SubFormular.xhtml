@@ -10,15 +10,26 @@
 			<p:ajax event="close" listener="#{menubean.handleClose}"  update=":mainCenterForm"/>
 			<p:panelGrid style="width: 80%">
 				<p:row>
+							<p:column style="text-align: center">
+								<h:outputText value="Customer: " />
+								<p:selectOneMenu id="selMaster"
+									value="#{subformulabean.selectedCustomer}">
+									<f:selectItems value="#{subformulabean.customers}" var="m"
+										itemLabel="#{m.company}" itemValue="#{m.id}" />
+									<p:ajax event="valueChange" listener="#{subformulabean.selCustomerChange}" update="tblSubFormula" process="@this" />
+								</p:selectOneMenu>
+							</p:column>
+						</p:row>
+				<p:row>
 					<p:column>
-						<p:dataTable resizableColumns="true" id="tblFormula" var="r" value="#{formulabean.master}" 
+						<p:dataTable resizableColumns="true" id="tblSubFormula" var="r" value="#{subformulabean.masters}" 
 							paginator="true" paginatorPosition="bottom" rows="15" 
-							selectionMode="single" selection="#{formulabean.selectedRow}"
+							selectionMode="single" selection="#{subformulabean.selectedRow}"
 							rowKey="#{r.id}">
 					        <f:facet name="header">
 					            <p:commandButton 
 					            	icon="ui-icon-plus" value="เพิ่ม" 
-					            	actionListener="#{formulabean.btnNewClick}" 
+					            	actionListener="#{subformulabean.btnNewClick}" 
 					            	oncomplete="PF('newObjectDlg').show()" process="@this" 
 					            	update=":mainCenterForm" resetValues="true"/>
 					        </f:facet>
@@ -39,10 +50,10 @@
 					            <h:outputText value="#{r.createUser}" />
 					        </p:column>
 							<p:column headerText="">
-					        	<p:commandLink value="แก้ไข" actionListener="#{formulabean.btnEditClick(r)}" oncomplete="PF('newObjectDlg').show()" process="@this" update=":mainCenterForm" resetValues="true"/>
+					        	<p:commandLink value="แก้ไข" actionListener="#{subformulabean.btnEditClick(r)}" oncomplete="PF('newObjectDlg').show()" process="@this" update=":mainCenterForm" resetValues="true"/>
 					        </p:column>
 							<p:column headerText="">
-								<p:commandLink value="ลบ" actionListener="#{formulabean.btnDeleteClick(r)}" oncomplete="PF('confirmDeleteCarDialog').show()" process="@this" resetValues="true"/>
+								<p:commandLink value="ลบ" actionListener="#{subformulabean.btnDeleteClick(r)}" oncomplete="PF('confirmDeleteCarDialog').show()" process="@this" resetValues="true"/>
 							</p:column>
 				    	</p:dataTable>
 					</p:column>
@@ -51,7 +62,7 @@
 		</p:panel>
 		
 		<p:confirmDialog message="คุณต้องการ ลบ ใช่หรือไม่ ?" closable="flase" header="ลบ" severity="alert" widgetVar="confirmDeleteCarDialog" appendTo="@(body)">  
-		  <p:commandButton value="ใช่" update=":mainCenterForm" onclick="PF('confirmDeleteCarDialog').hide()" actionListener="#{formulabean.confirmDeleteClick}" process="@this" ajax="true" icon="ui-icon-check"/>  
+		  <p:commandButton value="ใช่" update=":mainCenterForm" onclick="PF('confirmDeleteCarDialog').hide()" actionListener="#{subformulabean.confirmDeleteClick}" process="@this" ajax="true" icon="ui-icon-check"/>  
 		  <p:commandButton value="ไม่ใช่" onclick="PF('confirmDeleteCarDialog').hide()" type="button"  icon="ui-icon-closethick"/>   
 	    </p:confirmDialog>
 	    
@@ -60,10 +71,16 @@
 				<p:row>
 					<p:column>
 						<h:outputText value="Unit name : " />
-						<p:inputText value="#{formulabean.selectedRow.name}"/>
+						<p:inputText value="#{subformulabean.selectedRow.name}"/>
 					</p:column>
 				</p:row>
-				<p:commandButton value="บันทึก" icon="ui-icon-disk" actionListener="#{formulabean.btnSaveClick}" update=":mainCenterForm" process="@this panelInput" oncomplete="if (args.validationFailed) {PF('newObjectDlg').show(); } else {PF('newObjectDlg').hide(); }"/>
+				<p:row>
+					<p:column>
+						<h:outputText value="Value : " />
+						<p:inputText value="#{subformulabean.selectedRow.value}"/>
+					</p:column>
+				</p:row>
+				<p:commandButton value="บันทึก" icon="ui-icon-disk" actionListener="#{subformulabean.btnSaveClick}" update=":mainCenterForm" process="@this panelInput" oncomplete="if (args.validationFailed) {PF('newObjectDlg').show(); } else {PF('newObjectDlg').hide(); }"/>
 				<p:commandButton value="ยกเลิก" icon="ui-icon-close" onclick="PF('newObjectDlg').hide()"/>
 			</h:panelGrid>
 		</p:dialog>

@@ -122,6 +122,10 @@ public class VaSession implements Serializable {
 		em.remove(r);
 	}
 	
+	public List<Formula> querryAllFormularByMasterID(Long id) {
+		return em.createNativeQuery("select * from formular where main_formular_id = " + id, Formula.class).getResultList();
+	}
+	
 	public List<Formula> querryAllFormular() {
 		return em.createNativeQuery("select * from formula", Formula.class).getResultList();
 	}

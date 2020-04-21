@@ -3,6 +3,8 @@ package toto.ssm.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="formula")
@@ -39,6 +41,33 @@ public class Formula implements Serializable {
 	
 	@Column(name="unit")
 	private Integer unit;
+	
+	@ManyToOne
+    @JoinColumn(name="main_formular_id")
+    private Formula formula;
+
+    @OneToMany(mappedBy="formula", cascade = CascadeType.ALL)
+    private Set<Formula> formulas = new HashSet<Formula>();
+    
+    @ManyToOne
+	@JoinColumn(name = "customer_id")
+	private Customer customer;
+
+	public Formula getFormula() {
+		return formula;
+	}
+
+	public void setFormula(Formula formula) {
+		this.formula = formula;
+	}
+
+	public Set<Formula> getFormulas() {
+		return formulas;
+	}
+
+	public void setFormulas(Set<Formula> formulas) {
+		this.formulas = formulas;
+	}
 
 	public long getId() {
 		return id;

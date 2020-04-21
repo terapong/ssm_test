@@ -86,7 +86,7 @@ public class CustomerBean implements Serializable {
 		Customer tempMainCustomer = o;
 		mainCustomer = tempMainCustomer.getCompany();
 		selectedRow = new Customer();
-		selectedRow.setCustomer(tempMainCustomer);
+		//selectedRow.setCustomer(tempMainCustomer);
 		selectedRow.setUpdateDate(cal.getTime());
 		selectedRow.setIsHeadOffice(false);
 	}
