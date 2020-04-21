@@ -13,15 +13,15 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import toto.ssm.entity.Formula;
+import toto.ssm.entity.AdmixSP;
 import toto.ssm.session.VaSession;
 
 @ManagedBean(name = "admixSPbean")
 @ViewScoped
 public class AdmixSPBean implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private List<Formula> formulas;
-	private Formula selectedRow;
+	private List<AdmixSP> admixSPs;
+	private AdmixSP selectedRow;
 	private Calendar cal;
 	
 	@ManagedProperty(value = "#{VaSessionbean}")
@@ -32,7 +32,7 @@ public class AdmixSPBean implements Serializable {
 	@PostConstruct
 	private void init() {
 		cal = Calendar.getInstance();
-		formulas = session.querryAllFormular();
+		admixSPs = session.querryAllAdmixSP();
 	}
 
 	@PreDestroy
@@ -41,28 +41,28 @@ public class AdmixSPBean implements Serializable {
 	}
 	
 	public void btnNewClick() {
-		selectedRow = new Formula();
+		selectedRow = new AdmixSP();
 		selectedRow.setCreateDate(cal.getTime());
 		selectedRow.setUpdateDate(cal.getTime());
 	}
 	
 	public void btnSaveClick() {
 		selectedRow.setUpdateDate(cal.getTime());
-		session.updateFormula(selectedRow);
+		session.updateAdmixSP(selectedRow);
 		init();
 	}
 	
-	public void btnEditClick(Formula o) {
+	public void btnEditClick(AdmixSP o) {
 		selectedRow = o;
 	}
 	
-	public void btnDeleteClick(Formula o) {
+	public void btnDeleteClick(AdmixSP o) {
 		selectedRow = o;
 	}
 	
 	public void confirmDeleteClick() {
 		try {
-			session.deleteFormula(selectedRow);
+			session.deleteAdmixSP(selectedRow);
 			init();
 		} catch(Exception ex) {
 			FacesMessage msg = new FacesMessage();
@@ -89,19 +89,27 @@ public class AdmixSPBean implements Serializable {
 		this.session = session;
 	}
 
-	public List<Formula> getFormulas() {
-		return formulas;
+	public List<AdmixSP> getAdmixSPs() {
+		return admixSPs;
 	}
 
-	public void setFormulas(List<Formula> formulas) {
-		this.formulas = formulas;
+	public void setAdmixSPs(List<AdmixSP> admixSPs) {
+		this.admixSPs = admixSPs;
 	}
 
-	public Formula getSelectedRow() {
+	public AdmixSP getSelectedRow() {
 		return selectedRow;
 	}
 
-	public void setSelectedRow(Formula selectedRow) {
+	public void setSelectedRow(AdmixSP selectedRow) {
 		this.selectedRow = selectedRow;
+	}
+
+	public Calendar getCal() {
+		return cal;
+	}
+
+	public void setCal(Calendar cal) {
+		this.cal = cal;
 	}
 }

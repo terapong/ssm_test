@@ -20,6 +20,23 @@ public class VaSession implements Serializable {
 //		return (XtblDocket) em.createNativeQuery("select * from xtbl_docket where order_id = " + id, XtblDocket.class).getSingleResult();
 //	}
 	
+	public List<AdmixSP> querryAllAdmixSP() {
+		return em.createNativeQuery("select * from admixsp", AdmixSP.class).getResultList();
+	}
+	
+	public AdmixSP querryAdmixSPById(long id) {
+		return em.find(AdmixSP.class, id);
+	}
+	
+	public void updateAdmixSP(AdmixSP r) {
+		em.merge(r);
+	}
+	
+	public void deleteAdmixSP(AdmixSP r) throws Exception {
+		r = querryAdmixSPById(r.getId());
+		em.remove(r);
+	}
+	
 	public List<Stone> querryAllStone() {
 		return em.createNativeQuery("select * from stone", Stone.class).getResultList();
 	}
@@ -122,8 +139,21 @@ public class VaSession implements Serializable {
 		em.remove(r);
 	}
 	
+	public List<Formula> querryAllMainFormularByCustomerID(Long id) {
+		return em.createNativeQuery("select * from formula where is_main = 1 and customer_id = " + id, Formula.class).getResultList();
+	}
+	
 	public List<Formula> querryAllFormularByMasterID(Long id) {
-		return em.createNativeQuery("select * from formular where main_formular_id = " + id, Formula.class).getResultList();
+		return em.createNativeQuery("select * from formula where main_formular_id = " + id, Formula.class).getResultList();
+	}
+	
+	public List<Formula> querryAllSubFormular(Long id) {
+		
+		return em.createNativeQuery("select * from formula where is_main = 0 and main_formular_id = " + id, Formula.class).getResultList();
+	}
+	
+	public List<Formula> querryAllMainFormular() {
+		return em.createNativeQuery("select * from formula where is_main = 1", Formula.class).getResultList();
 	}
 	
 	public List<Formula> querryAllFormular() {

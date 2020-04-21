@@ -13,6 +13,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import toto.ssm.entity.Customer;
 import toto.ssm.entity.Formula;
 import toto.ssm.session.VaSession;
 
@@ -22,8 +23,9 @@ public class FormulaBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private List<Formula> master;
 	private List<Formula> slave;
-	//private List<Plants> plants;
-	//private Plants selectedPlan;
+	private List<Customer> customers;
+	private Customer selectedCustomer;
+	private Long selectedCustomerID;
 	private Formula selectedRow;
 	private Calendar cal;
 	
@@ -35,7 +37,11 @@ public class FormulaBean implements Serializable {
 	@PostConstruct
 	private void init() {
 		cal = Calendar.getInstance();
-		master = session.querryAllFormular();
+		customers = session.querryAllCustomer();
+		selectedCustomer = customers.get(0);
+		selectedCustomerID = selectedCustomer.getId();
+		master = session.querryAllMainFormularByCustomerID(selectedCustomerID);
+		
 //		for(Formula m : master) {
 //			slave = session.querryAllFormularByMasterID(m.getId());
 //			if(slave.isEmpty()) {
@@ -55,12 +61,15 @@ public class FormulaBean implements Serializable {
 		selectedRow = new Formula();
 		selectedRow.setCreateDate(cal.getTime());
 		selectedRow.setUpdateDate(cal.getTime());
+		selectedRow.setIsMain(true);
+		selectedRow.setCustomer(selectedCustomer);
 	}
 	
 	public void btnSaveClick() {
 		selectedRow.setUpdateDate(cal.getTime());
 		session.updateFormula(selectedRow);
-		init();
+		master = session.querryAllMainFormularByCustomerID(selectedCustomerID);
+		//init();
 	}
 	
 	public void btnEditClick(Formula o) {
@@ -82,6 +91,21 @@ public class FormulaBean implements Serializable {
 			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
+	}
+	
+	public void selCustomerChange() {
+		selectedCustomer = session.querryCustomerById(selectedCustomerID);
+		selectedCustomerID = selectedCustomer.getId();
+		master = session.querryAllMainFormularByCustomerID(selectedCustomerID);
+		
+//		masters = session.querryAllFormularByMasterID(id)
+//		for(Employee r : slave) {
+//			if(r.getUserName().equals("admin")) {
+//				r.setRenderedDelete("false");
+//			} else {
+//				r.setRenderedDelete("true");
+//			}
+//		}
 	}
 
 	public VaSessionbean getVasessionbean() {
@@ -122,5 +146,29 @@ public class FormulaBean implements Serializable {
 
 	public void setSlave(List<Formula> slave) {
 		this.slave = slave;
+	}
+
+	public List<Customer> getCustomers() {
+		return customers;
+	}
+
+	public void setCustomers(List<Customer> customers) {
+		this.customers = customers;
+	}
+
+	public Customer getSelectedCustomer() {
+		return selectedCustomer;
+	}
+
+	public void setSelectedCustomer(Customer selectedCustomer) {
+		this.selectedCustomer = selectedCustomer;
+	}
+
+	public Long getSelectedCustomerID() {
+		return selectedCustomerID;
+	}
+
+	public void setSelectedCustomerID(Long selectedCustomerID) {
+		this.selectedCustomerID = selectedCustomerID;
 	}
 }

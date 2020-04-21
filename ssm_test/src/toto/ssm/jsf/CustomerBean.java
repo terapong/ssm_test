@@ -73,10 +73,6 @@ public class CustomerBean implements Serializable {
 		plants = o.getPlants();
 	}
 	
-//	public void btnNewPlantClick(Customer o) {
-//		System.out.println("btnNewPlantClick 5555555555555 : " + mainCustomer);
-//	}
-	
 	public void btnNewPlantClick() {
 		System.out.println("btnNewPlantClick 5555555555555 : " + mainCustomer);
 	}
@@ -86,13 +82,15 @@ public class CustomerBean implements Serializable {
 		Customer tempMainCustomer = o;
 		mainCustomer = tempMainCustomer.getCompany();
 		selectedRow = new Customer();
-		//selectedRow.setCustomer(tempMainCustomer);
+		selectedRow.setCustomer(tempMainCustomer);
+		selectedRow.setCreateDate(cal.getTime());
 		selectedRow.setUpdateDate(cal.getTime());
 		selectedRow.setIsHeadOffice(false);
 	}
 	
 	public void btnNewClick() {
 		selectedRow = new Customer();
+		selectedRow.setCreateDate(cal.getTime());
 		selectedRow.setUpdateDate(cal.getTime());
 		selectedRow.setIsHeadOffice(true);
 	}

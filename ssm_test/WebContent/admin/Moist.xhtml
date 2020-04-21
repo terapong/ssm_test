@@ -55,7 +55,7 @@
 	    </p:confirmDialog>
 	    
 	    <p:dialog id="newObjectDlg" header="เพิ่ม #{vasessionbean.programName}" widgetVar="newObjectDlg"  modal="true" appendTo="@(body)" width="700px" height="500px" closable="true">
-			<h:panelGrid id="panelInput">
+			<p:panelGrid id="panelInput">
 				<p:row>
 					<p:column>
 						<h:outputText value="Moist name : " />
@@ -69,6 +69,9 @@
 					<p:column>
 						<p:inputText value="#{moistbean.selectedRow.value}"/>
 					</p:column>
+					<p:column>
+						<h:outputText value=" Kg" />
+					</p:column>
 				</p:row>
 				<p:row>
 					<p:column>
@@ -77,6 +80,9 @@
 					<p:column>
 						<p:inputText value="#{moistbean.selectedRow.unit}"/>
 					</p:column>
+					<p:column>
+						<h:outputText value=" Kg" />
+					</p:column>
 				</p:row>
 				<p:row>
 					<p:column style="text-align: center">
@@ -84,7 +90,7 @@
 						<p:commandButton value="ยกเลิก" icon="ui-icon-close" onclick="PF('newObjectDlg').hide()"/>
 					</p:column>
 				</p:row>
-			</h:panelGrid>
+			</p:panelGrid>
 		</p:dialog>
 	</ui:composition>
 </html>

@@ -26,6 +26,9 @@ public class Formula implements Serializable {
 	@Column(name="name")
 	private String name;
 	
+	@Column(name="is_main")
+	private Boolean isMain;
+	
 	@Column(name="value")
 	private Integer value;
 	@Column(name="create_date")
@@ -52,6 +55,46 @@ public class Formula implements Serializable {
     @ManyToOne
 	@JoinColumn(name = "customer_id")
 	private Customer customer;
+    
+    @OneToOne
+	@JoinColumn(name = "moist_id")
+    private Moist moist;
+	
+    @OneToOne
+    @JoinColumn(name = "admixsp_id")
+	private AdmixSP admixSP;
+    
+    @OneToOne
+    @JoinColumn(name = "silo_id")
+	private Silo silo;
+    
+    @OneToOne
+    @JoinColumn(name = "cemtmx_id")
+	private CemtMX cemtMX;
+    
+    @OneToOne
+    @JoinColumn(name = "cemtsp_id")
+	private CemtSP cemtSP;
+    
+    @OneToOne
+    @JoinColumn(name = "aggsp_id")
+	private AggSP aggSP;
+    
+    @OneToOne
+    @JoinColumn(name = "sand_id")
+	private Sand sand;
+    
+    @OneToOne
+    @JoinColumn(name = "stone_id")
+	private Stone stone;
+	
+	public Moist getMoist() {
+		return moist;
+	}
+
+	public void setMoist(Moist moist) {
+		this.moist = moist;
+	}
 
 	public Formula getFormula() {
 		return formula;
@@ -124,4 +167,142 @@ public class Formula implements Serializable {
 	public void setUnit(Integer unit) {
 		this.unit = unit;
 	}
+
+	public Boolean getIsMain() {
+		return isMain;
+	}
+
+	public void setIsMain(Boolean isMain) {
+		this.isMain = isMain;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	public AdmixSP getAdmixSP() {
+		return admixSP;
+	}
+
+	public void setAdmixSP(AdmixSP admixSP) {
+		this.admixSP = admixSP;
+	}
+
+	public Silo getSilo() {
+		return silo;
+	}
+
+	public void setSilo(Silo silo) {
+		this.silo = silo;
+	}
+
+	public CemtMX getCemtMX() {
+		return cemtMX;
+	}
+
+	public void setCemtMX(CemtMX cemtMX) {
+		this.cemtMX = cemtMX;
+	}
+
+	public CemtSP getCemtSP() {
+		return cemtSP;
+	}
+
+	public void setCemtSP(CemtSP cemtSP) {
+		this.cemtSP = cemtSP;
+	}
+
+	public AggSP getAggSP() {
+		return aggSP;
+	}
+
+	public void setAggSP(AggSP aggSP) {
+		this.aggSP = aggSP;
+	}
+
+	public Sand getSand() {
+		return sand;
+	}
+
+	public void setSand(Sand sand) {
+		this.sand = sand;
+	}
+
+	public Stone getStone() {
+		return stone;
+	}
+
+	public void setStone(Stone stone) {
+		this.stone = stone;
+	}
+	
+	
+
+//	public List<Moist> getMoists() {
+//		return moists;
+//	}
+//
+//	public void setMoists(List<Moist> moists) {
+//		this.moists = moists;
+//	}
+
+//	public List<AdmixSP> getAdmixSP() {
+//		return admixSP;
+//	}
+//
+//	public void setAdmixSP(List<AdmixSP> admixSP) {
+//		this.admixSP = admixSP;
+//	}
+//
+//	public List<Silo> getSilo() {
+//		return silo;
+//	}
+//
+//	public void setSilo(List<Silo> silo) {
+//		this.silo = silo;
+//	}
+//
+//	public List<CemtMX> getCemtMX() {
+//		return cemtMX;
+//	}
+//
+//	public void setCemtMX(List<CemtMX> cemtMX) {
+//		this.cemtMX = cemtMX;
+//	}
+//
+//	public List<CemtSP> getCemtSP() {
+//		return cemtSP;
+//	}
+//
+//	public void setCemtSP(List<CemtSP> cemtSP) {
+//		this.cemtSP = cemtSP;
+//	}
+//
+//	public List<AggSP> getAggSP() {
+//		return aggSP;
+//	}
+//
+//	public void setAggSP(List<AggSP> aggSP) {
+//		this.aggSP = aggSP;
+//	}
+//
+//	public List<Sand> getSand() {
+//		return sand;
+//	}
+//
+//	public void setSand(List<Sand> sand) {
+//		this.sand = sand;
+//	}
+//
+//	public List<Stone> getStone() {
+//		return stone;
+//	}
+//
+//	public void setStone(List<Stone> stone) {
+//		this.stone = stone;
+//	}
 }

@@ -11,7 +11,7 @@
 			<p:panelGrid style="width: 85%">
 				<p:row>
 					<p:column>
-						<p:dataTable resizableColumns="true" id="tblFormula" var="r" value="#{admixSPbean.formulas}" paginator="true" paginatorPosition="bottom" rows="15" selectionMode="single" selection="#{admixSPbean.selectedRow}" rowKey="#{r.id}">
+						<p:dataTable resizableColumns="true" id="tblAdmixSP" var="r" value="#{admixSPbean.admixSPs}" paginator="true" paginatorPosition="bottom" rows="15" selectionMode="single" selection="#{admixSPbean.selectedRow}" rowKey="#{r.id}">
 					        <f:facet name="header">
 					            <p:commandButton icon="ui-icon-plus" value="เพิ่ม" actionListener="#{admixSPbean.btnNewClick}" oncomplete="PF('newObjectDlg').show()" process="@this" update=":mainCenterForm" resetValues="true"/>
 					        </f:facet>
