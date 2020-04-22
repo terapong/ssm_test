@@ -24,32 +24,34 @@ public class SubFormulaBean implements Serializable {
 	private Customer selectedCustomer;
 	private Long selectedCustomerID;
 	private List<Formula> mainformulars;
+	private Formula mainformular;
 	private Long selectedmainformularID;
 	private List<Formula> subFormulars;
 	private Formula selectedRow;
 	private Calendar cal;
 	
 	private List<Moist> moists;
-	private Moist selectedMoistID;
+	private Long selectedMoistID;
 	private List<AdmixSP> admixSP;
-	private AdmixSP selectedAdmixSPID;
+	private Long selectedAdmixSPID;
 	private List<Silo> silo;
-	private Silo SelectedSiloID;
+	private Long selectedSiloID;
 	private List<CemtMX> cemtMX;
-	private CemtMX selectedCemtMXID;
+	private Long selectedCemtMXID;
 	private List<CemtSP> cemtSP;
-	private CemtSP selectedCemtSPID;
+	private Long selectedCemtSPID;
 	private List<AggSP> aggSP;
-	private AggSP selectedaggSPID;
+	private Long selectedaggSPID;
 	private List<Sand> sand;
-	private Sand selectedSandID;
+	private Long selectedSandID;
 	private List<Stone> stone;
-	private Stone selectedStoneID;
+	private Long selectedStoneID;
 	
 	@ManagedProperty(value = "#{VaSessionbean}")
 	private VaSessionbean vasessionbean;
 	
 	@EJB private VaSession session;
+	
 	
 	@PostConstruct
 	private void init() {
@@ -58,13 +60,13 @@ public class SubFormulaBean implements Serializable {
 		selectedCustomer = customers.get(0);
 		selectedCustomerID = selectedCustomer.getId();
 		mainformulars = session.querryAllMainFormularByCustomerID(selectedCustomerID);
-		selectedmainformularID = mainformulars.get(0).getId();
-		
+		mainformular =mainformulars.get(0);
+		selectedmainformularID = mainformular.getId();
 		subFormulars = session.querryAllSubFormular(selectedmainformularID);
 		
 		moists = session.querryAllMoist();
-		silo = session.querryAllSilo();
 		admixSP = session.querryAllAdmixSP();
+		silo = session.querryAllSilo();
 		cemtMX = session.querryAllCemtMX();
 		cemtSP = session.querryAllCemtSP();
 		aggSP = session.querryAllAggSP();
@@ -72,106 +74,54 @@ public class SubFormulaBean implements Serializable {
 		stone = session.querryAllStone();
 		
 		if(!moists.isEmpty()) {
-			selectedMoistID = moists.get(0);
+			selectedMoistID = moists.get(0).getId();
 		} else {
 			selectedMoistID = null;
 		}
 		
 		if(!silo.isEmpty()) {
-			SelectedSiloID = silo.get(0);
+			selectedSiloID = silo.get(0).getId();
 		} else {
-			SelectedSiloID = null;
+			selectedSiloID = null;
 		}
 		
 		if(!admixSP.isEmpty()) {
-			selectedAdmixSPID = admixSP.get(0);
+			selectedAdmixSPID = admixSP.get(0).getId();
 		} else {
 			selectedAdmixSPID = null;
 		}
 		
 		if(!cemtMX.isEmpty()) {
-			selectedCemtMXID = cemtMX.get(0);
+			selectedCemtMXID = cemtMX.get(0).getId();
 		} else {
 			selectedCemtMXID = null;
 		}
 		
 		if(!cemtSP.isEmpty()) {
-			selectedCemtSPID = cemtSP.get(0);
+			selectedCemtSPID = cemtSP.get(0).getId();
 		} else {
 			selectedCemtSPID = null;
 		}
 		
 		if(!aggSP.isEmpty()) {
-			selectedaggSPID = aggSP.get(0);
+			selectedaggSPID = aggSP.get(0).getId();
 		} else {
 			selectedaggSPID = null;
 		}
 		
 		if(!sand.isEmpty()) {
-			selectedSandID = sand.get(0);
+			selectedSandID = sand.get(0).getId();
 		} else {
 			selectedSandID = null;
 		}
 		
 		if(!stone.isEmpty()) {
-			selectedStoneID = stone.get(0);
+			selectedStoneID = stone.get(0).getId();
 		} else {
 			selectedStoneID = null;
 		}
-		
-		selectedRow = new Formula();
-//		selectedRow.setm
 	}
 	
-	public void btnSaveClick() {
-		selectedRow.setUpdateDate(cal.getTime());
-		session.updateFormula(selectedRow);
-		
-		System.out.println("SubFormular btnSaveClick xxxxxxxxxxxxxxxxxxxxx");
-		
-		init();
-	}
-	
-	public void selMoistChang() {
-		selectedRow.setMoist(selectedMoistID);
-		System.out.println("selMoistChang");
-	}
-	
-	public void seladmixSPChang() {
-		selectedRow.setAdmixSP(selectedAdmixSPID);
-		System.out.println("seladmixSPChang");
-	}
-	
-	public void selsiloChang() {
-		selectedRow.setSilo(SelectedSiloID);
-		System.out.println("selsiloChang");
-	}
-	
-	public void selCemtMXChang() {
-		selectedRow.setCemtMX(selectedCemtMXID);
-		System.out.println("selCemtMXChang");
-	}
-	
-	public void selCemtSPChang() {
-		selectedRow.setCemtSP(selectedCemtSPID);
-		System.out.println("selCemtSPChang");
-	}
-	
-	public void selAggSPChang() {
-		selectedRow.setAggSP(selectedaggSPID);
-		System.out.println("selAggSPChang");
-	}
-	
-	public void selSandChang() {
-		selectedRow.setSand(selectedSandID);
-		System.out.println("selSandChang");
-	}
-	
-	public void selStoneChang() {
-		selectedRow.setStone(selectedStoneID);
-		System.out.println("selStoneChang");
-	}
-
 	@PreDestroy
 	private void destroy() {
 		
@@ -186,8 +136,8 @@ public class SubFormulaBean implements Serializable {
 	}
 
 	public void selMainformularChange() {
+		mainformular = session.querryFormulaById(selectedmainformularID);
 		subFormulars = session.querryAllFormularByMasterID(selectedmainformularID);
-		System.out.println("selMainformularChange uuuuuuuuuuuuuu");
 	}
 	
 	public void btnNewClick() {
@@ -196,7 +146,73 @@ public class SubFormulaBean implements Serializable {
 		selectedRow.setUpdateDate(cal.getTime());
 		selectedRow.setIsMain(false);
 		selectedRow.setCustomer(selectedCustomer);
-		//selectedRow.setFormula(formula);
+		selectedRow.setFormula(mainformular);
+		
+		selectedRow.setMoist(moists.get(0));
+		selectedRow.setAdmixSP(admixSP.get(0));
+		selectedRow.setAggSP(aggSP.get(0));
+		selectedRow.setCemtMX(cemtMX.get(0));
+		selectedRow.setCemtSP(cemtSP.get(0));
+		selectedRow.setSand(sand.get(0));
+		selectedRow.setStone(stone.get(0));
+		selectedRow.setSilo(silo.get(0));
+	}
+	
+	public void btnSaveClick() {
+		selectedRow.setUpdateDate(cal.getTime());
+		session.updateFormula(selectedRow);
+		
+		System.out.println("SubFormular btnSaveClick xxxxxxxxxxxxxxxxxxxxx");
+		
+		init();
+	}
+	
+	public void selMoistChang() {
+		Moist m = session.querryMoistById(selectedMoistID);
+		selectedRow.setMoist(m);
+		System.out.println("selMoistChang");
+	}
+	
+	public void seladmixSPChang() {
+		AdmixSP admixSP  = session.querryAdmixSPById(selectedAdmixSPID);
+		selectedRow.setAdmixSP(admixSP);
+		System.out.println("seladmixSPChang");
+	}
+
+	public void selsiloChang() {
+		Silo SelectedSiloID = session.querrySiloById(selectedSiloID);
+		selectedRow.setSilo(SelectedSiloID);
+		System.out.println("selsiloChang");
+	}
+	
+	public void selCemtMXChang() {
+		CemtMX cemtMX = session.querryCemtMXById(selectedCemtMXID);
+		selectedRow.setCemtMX(cemtMX);
+		System.out.println("selCemtMXChang");
+	}
+	
+	public void selCemtSPChang() {
+		CemtSP cemtSP = session.querryCemtSPById(selectedCemtSPID);
+		selectedRow.setCemtSP(cemtSP);
+		System.out.println("selCemtSPChang");
+	}
+	
+	public void selAggSPChang() {
+		AggSP aggSP = session.querryAggSPById(selectedaggSPID);
+		selectedRow.setAggSP(aggSP);
+		System.out.println("selAggSPChang");
+	}
+	
+	public void selSandChang() {
+		Sand sand = session.querrySandById(selectedSandID);
+		selectedRow.setSand(sand);
+		System.out.println("selSandChang");
+	}
+	
+	public void selStoneChang() {
+		Stone stone = session.querryStoneById(selectedStoneID);
+		selectedRow.setStone(stone);
+		System.out.println("selStoneChang");
 	}
 	
 	public void btnEditClick(Formula o) {
@@ -232,6 +248,8 @@ public class SubFormulaBean implements Serializable {
 		selectedCustomer = session.querryCustomerById(selectedCustomerID);
 		selectedCustomerID = selectedCustomer.getId();
 		mainformulars = session.querryAllMainFormularByCustomerID(selectedCustomerID);
+		//subFormulars = null;
+		subFormulars = session.querryAllFormularByMasterID(mainformulars.get(0).getId());
 		
 //		masters = session.querryAllFormularByMasterID(id)
 //		for(Employee r : slave) {
@@ -242,6 +260,105 @@ public class SubFormulaBean implements Serializable {
 //			}
 //		}
 	}
+
+//	moists = session.querryAllMoist();
+//	silo = session.querryAllSilo();
+//	admixSP = session.querryAllAdmixSP();
+//	cemtMX = session.querryAllCemtMX();
+//	cemtSP = session.querryAllCemtSP();
+//	aggSP = session.querryAllAggSP();
+//	sand = session.querryAllSand();
+//	stone = session.querryAllStone();
+//	
+//	if(!moists.isEmpty()) {
+//		selectedMoistID = moists.get(0);
+//	} else {
+//		selectedMoistID = null;
+//	}
+//	
+//	if(!silo.isEmpty()) {
+//		SelectedSiloID = silo.get(0);
+//	} else {
+//		SelectedSiloID = null;
+//	}
+//	
+//	if(!admixSP.isEmpty()) {
+//		selectedAdmixSPID = admixSP.get(0);
+//	} else {
+//		selectedAdmixSPID = null;
+//	}
+//	
+//	if(!cemtMX.isEmpty()) {
+//		selectedCemtMXID = cemtMX.get(0);
+//	} else {
+//		selectedCemtMXID = null;
+//	}
+//	
+//	if(!cemtSP.isEmpty()) {
+//		selectedCemtSPID = cemtSP.get(0);
+//	} else {
+//		selectedCemtSPID = null;
+//	}
+//	
+//	if(!aggSP.isEmpty()) {
+//		selectedaggSPID = aggSP.get(0);
+//	} else {
+//		selectedaggSPID = null;
+//	}
+//	
+//	if(!sand.isEmpty()) {
+//		selectedSandID = sand.get(0);
+//	} else {
+//		selectedSandID = null;
+//	}
+//	
+//	if(!stone.isEmpty()) {
+//		selectedStoneID = stone.get(0);
+//	} else {
+//		selectedStoneID = null;
+//	}
+//	
+//	selectedRow = new Formula();
+//	selectedRow.setm
+//	public void selMoistChang() {
+//	selectedRow.setMoist(selectedMoistID);
+//	System.out.println("selMoistChang");
+//}
+//
+//public void seladmixSPChang() {
+//	selectedRow.setAdmixSP(selectedAdmixSPID);
+//	System.out.println("seladmixSPChang");
+//}
+//
+//public void selsiloChang() {
+//	selectedRow.setSilo(SelectedSiloID);
+//	System.out.println("selsiloChang");
+//}
+//
+//public void selCemtMXChang() {
+//	selectedRow.setCemtMX(selectedCemtMXID);
+//	System.out.println("selCemtMXChang");
+//}
+//
+//public void selCemtSPChang() {
+//	selectedRow.setCemtSP(selectedCemtSPID);
+//	System.out.println("selCemtSPChang");
+//}
+//
+//public void selAggSPChang() {
+//	selectedRow.setAggSP(selectedaggSPID);
+//	System.out.println("selAggSPChang");
+//}
+//
+//public void selSandChang() {
+//	selectedRow.setSand(selectedSandID);
+//	System.out.println("selSandChang");
+//}
+//
+//public void selStoneChang() {
+//	selectedRow.setStone(selectedStoneID);
+//	System.out.println("selStoneChang");
+//}
 
 	public Formula getSelectedRow() {
 		return selectedRow;
@@ -307,12 +424,28 @@ public class SubFormulaBean implements Serializable {
 		this.cal = cal;
 	}
 
+	public Formula getMainformular() {
+		return mainformular;
+	}
+
+	public void setMainformular(Formula mainformular) {
+		this.mainformular = mainformular;
+	}
+
 	public List<Moist> getMoists() {
 		return moists;
 	}
 
 	public void setMoists(List<Moist> moists) {
 		this.moists = moists;
+	}
+
+	public Long getSelectedMoistID() {
+		return selectedMoistID;
+	}
+
+	public void setSelectedMoistID(Long selectedMoistID) {
+		this.selectedMoistID = selectedMoistID;
 	}
 
 	public List<AdmixSP> getAdmixSP() {
@@ -323,6 +456,13 @@ public class SubFormulaBean implements Serializable {
 		this.admixSP = admixSP;
 	}
 
+	public Long getSelectedAdmixSPID() {
+		return selectedAdmixSPID;
+	}
+
+	public void setSelectedAdmixSPID(Long selectedAdmixSPID) {
+		this.selectedAdmixSPID = selectedAdmixSPID;
+	}
 
 	public List<Silo> getSilo() {
 		return silo;
@@ -330,6 +470,14 @@ public class SubFormulaBean implements Serializable {
 
 	public void setSilo(List<Silo> silo) {
 		this.silo = silo;
+	}
+
+	public Long getSelectedSiloID() {
+		return selectedSiloID;
+	}
+
+	public void setSelectedSiloID(Long selectedSiloID) {
+		this.selectedSiloID = selectedSiloID;
 	}
 
 	public List<CemtMX> getCemtMX() {
@@ -340,12 +488,28 @@ public class SubFormulaBean implements Serializable {
 		this.cemtMX = cemtMX;
 	}
 
+	public Long getSelectedCemtMXID() {
+		return selectedCemtMXID;
+	}
+
+	public void setSelectedCemtMXID(Long selectedCemtMXID) {
+		this.selectedCemtMXID = selectedCemtMXID;
+	}
+
 	public List<CemtSP> getCemtSP() {
 		return cemtSP;
 	}
 
 	public void setCemtSP(List<CemtSP> cemtSP) {
 		this.cemtSP = cemtSP;
+	}
+
+	public Long getSelectedCemtSPID() {
+		return selectedCemtSPID;
+	}
+
+	public void setSelectedCemtSPID(Long selectedCemtSPID) {
+		this.selectedCemtSPID = selectedCemtSPID;
 	}
 
 	public List<AggSP> getAggSP() {
@@ -356,12 +520,28 @@ public class SubFormulaBean implements Serializable {
 		this.aggSP = aggSP;
 	}
 
+	public Long getSelectedaggSPID() {
+		return selectedaggSPID;
+	}
+
+	public void setSelectedaggSPID(Long selectedaggSPID) {
+		this.selectedaggSPID = selectedaggSPID;
+	}
+
 	public List<Sand> getSand() {
 		return sand;
 	}
 
 	public void setSand(List<Sand> sand) {
 		this.sand = sand;
+	}
+
+	public Long getSelectedSandID() {
+		return selectedSandID;
+	}
+
+	public void setSelectedSandID(Long selectedSandID) {
+		this.selectedSandID = selectedSandID;
 	}
 
 	public List<Stone> getStone() {
@@ -372,67 +552,132 @@ public class SubFormulaBean implements Serializable {
 		this.stone = stone;
 	}
 
-	public Moist getSelectedMoistID() {
-		return selectedMoistID;
-	}
-
-	public void setSelectedMoistID(Moist selectedMoistID) {
-		this.selectedMoistID = selectedMoistID;
-	}
-
-	public AdmixSP getSelectedAdmixSPID() {
-		return selectedAdmixSPID;
-	}
-
-	public void setSelectedAdmixSPID(AdmixSP selectedAdmixSPID) {
-		this.selectedAdmixSPID = selectedAdmixSPID;
-	}
-
-	public Silo getSelectedSiloID() {
-		return SelectedSiloID;
-	}
-
-	public void setSelectedSiloID(Silo selectedSiloID) {
-		SelectedSiloID = selectedSiloID;
-	}
-
-	public CemtMX getSelectedCemtMXID() {
-		return selectedCemtMXID;
-	}
-
-	public void setSelectedCemtMXID(CemtMX selectedCemtMXID) {
-		this.selectedCemtMXID = selectedCemtMXID;
-	}
-
-	public CemtSP getSelectedCemtSPID() {
-		return selectedCemtSPID;
-	}
-
-	public void setSelectedCemtSPID(CemtSP selectedCemtSPID) {
-		this.selectedCemtSPID = selectedCemtSPID;
-	}
-
-	public AggSP getSelectedaggSPID() {
-		return selectedaggSPID;
-	}
-
-	public void setSelectedaggSPID(AggSP selectedaggSPID) {
-		this.selectedaggSPID = selectedaggSPID;
-	}
-
-	public Sand getSelectedSandID() {
-		return selectedSandID;
-	}
-
-	public void setSelectedSandID(Sand selectedSandID) {
-		this.selectedSandID = selectedSandID;
-	}
-
-	public Stone getSelectedStoneID() {
+	public Long getSelectedStoneID() {
 		return selectedStoneID;
 	}
 
-	public void setSelectedStoneID(Stone selectedStoneID) {
+	public void setSelectedStoneID(Long selectedStoneID) {
 		this.selectedStoneID = selectedStoneID;
 	}
+
+//	public List<AdmixSP> getAdmixSP() {
+//		return admixSP;
+//	}
+//
+//	public void setAdmixSP(List<AdmixSP> admixSP) {
+//		this.admixSP = admixSP;
+//	}
+//
+//
+//	public List<Silo> getSilo() {
+//		return silo;
+//	}
+//
+//	public void setSilo(List<Silo> silo) {
+//		this.silo = silo;
+//	}
+//
+//	public List<CemtMX> getCemtMX() {
+//		return cemtMX;
+//	}
+//
+//	public void setCemtMX(List<CemtMX> cemtMX) {
+//		this.cemtMX = cemtMX;
+//	}
+//
+//	public List<CemtSP> getCemtSP() {
+//		return cemtSP;
+//	}
+//
+//	public void setCemtSP(List<CemtSP> cemtSP) {
+//		this.cemtSP = cemtSP;
+//	}
+//
+//	public List<AggSP> getAggSP() {
+//		return aggSP;
+//	}
+//
+//	public void setAggSP(List<AggSP> aggSP) {
+//		this.aggSP = aggSP;
+//	}
+//
+//	public List<Sand> getSand() {
+//		return sand;
+//	}
+//
+//	public void setSand(List<Sand> sand) {
+//		this.sand = sand;
+//	}
+//
+//	public List<Stone> getStone() {
+//		return stone;
+//	}
+//
+//	public void setStone(List<Stone> stone) {
+//		this.stone = stone;
+//	}
+//
+//	public Moist getSelectedMoistID() {
+//		return selectedMoistID;
+//	}
+//
+//	public void setSelectedMoistID(Moist selectedMoistID) {
+//		this.selectedMoistID = selectedMoistID;
+//	}
+//
+//	public AdmixSP getSelectedAdmixSPID() {
+//		return selectedAdmixSPID;
+//	}
+//
+//	public void setSelectedAdmixSPID(AdmixSP selectedAdmixSPID) {
+//		this.selectedAdmixSPID = selectedAdmixSPID;
+//	}
+//
+//	public Silo getSelectedSiloID() {
+//		return SelectedSiloID;
+//	}
+//
+//	public void setSelectedSiloID(Silo selectedSiloID) {
+//		SelectedSiloID = selectedSiloID;
+//	}
+//
+//	public CemtMX getSelectedCemtMXID() {
+//		return selectedCemtMXID;
+//	}
+//
+//	public void setSelectedCemtMXID(CemtMX selectedCemtMXID) {
+//		this.selectedCemtMXID = selectedCemtMXID;
+//	}
+//
+//	public CemtSP getSelectedCemtSPID() {
+//		return selectedCemtSPID;
+//	}
+//
+//	public void setSelectedCemtSPID(CemtSP selectedCemtSPID) {
+//		this.selectedCemtSPID = selectedCemtSPID;
+//	}
+//
+//	public AggSP getSelectedaggSPID() {
+//		return selectedaggSPID;
+//	}
+//
+//	public void setSelectedaggSPID(AggSP selectedaggSPID) {
+//		this.selectedaggSPID = selectedaggSPID;
+//	}
+//
+//	public Sand getSelectedSandID() {
+//		return selectedSandID;
+//	}
+//
+//	public void setSelectedSandID(Sand selectedSandID) {
+//		this.selectedSandID = selectedSandID;
+//	}
+//
+//	public Stone getSelectedStoneID() {
+//		return selectedStoneID;
+//	}
+//
+//	public void setSelectedStoneID(Stone selectedStoneID) {
+//		this.selectedStoneID = selectedStoneID;
+//	}
 }

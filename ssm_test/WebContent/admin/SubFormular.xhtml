@@ -16,7 +16,7 @@
 							value="#{subformulabean.selectedCustomerID}">
 							<f:selectItems value="#{subformulabean.customers}" var="m"
 								itemLabel="#{m.company}" itemValue="#{m.id}" />
-							<p:ajax event="valueChange" listener="#{subformulabean.selCustomerChange}" update="selMainFormular" process="@this" />
+							<p:ajax event="valueChange" listener="#{subformulabean.selCustomerChange}" update="selMainFormular tblSubFormula" process="@this" />
 						</p:selectOneMenu>
 						<h:outputText value="Main formular: " />
 						<p:selectOneMenu id="selMainFormular"
@@ -74,6 +74,132 @@
 	    </p:confirmDialog>
 	    
 	    <p:dialog id="newObjectDlg" header="เพิ่ม #{vasessionbean.programName}" widgetVar="newObjectDlg"  modal="true" appendTo="@(body)" width="700px" height="500px" closable="true">
+			<p:panelGrid id="panelInput">
+				<p:row>
+					<p:column>
+						<h:outputText value="Name : " />
+					</p:column>
+					<p:column>
+						<p:inputText value="#{subformulabean.selectedRow.name}"/>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<h:outputText value="Moist : " />
+					</p:column>
+					<p:column>
+						<p:selectOneMenu id="selMoist"
+							value="#{subformulabean.selectedMoistID}">
+							<f:selectItems value="#{subformulabean.moists}" var="mo"
+								itemLabel="#{mo.name}" itemValue="#{mo.id}" />
+							<p:ajax event="valueChange" listener="#{subformulabean.selMoistChang}" process="@this" />
+						</p:selectOneMenu>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<h:outputText value="AdmixSP : " />
+					</p:column>
+					<p:column>
+						<p:selectOneMenu id="selAdmixSP"
+							value="#{subformulabean.selectedAdmixSPID}">
+							<f:selectItems value="#{subformulabean.admixSP}" var="as"
+								itemLabel="#{as.name}" itemValue="#{as.id}" />
+							<p:ajax event="valueChange" listener="#{subformulabean.seladmixSPChang}" process="@this" />
+						</p:selectOneMenu>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<h:outputText value="Silo : " />
+					</p:column>
+					<p:column>
+						<p:selectOneMenu id="selSilo"
+							value="#{subformulabean.selectedSiloID}">
+							<f:selectItems value="#{subformulabean.silo}" var="as"
+								itemLabel="#{as.name}" itemValue="#{as.id}" />
+							<p:ajax event="valueChange" listener="#{subformulabean.selsiloChang}" process="@this" />
+						</p:selectOneMenu>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<h:outputText value="CemtMX : " />
+					</p:column>
+					<p:column>
+						<p:selectOneMenu id="selCemtMX"
+							value="#{subformulabean.selectedCemtMXID}">
+							<f:selectItems value="#{subformulabean.cemtMX}" var="cx"
+								itemLabel="#{cx.name}" itemValue="#{cx.id}" />
+							<p:ajax event="valueChange" listener="#{subformulabean.selCemtMXChang}" process="@this" />
+						</p:selectOneMenu>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<h:outputText value="CemtSP : " />
+					</p:column>
+					<p:column>
+						<p:selectOneMenu id="selCemtSP"
+							value="#{subformulabean.selectedCemtSPID}">
+							<f:selectItems value="#{subformulabean.cemtSP}" var="sp"
+								itemLabel="#{sp.name}" itemValue="#{sp.id}" />
+							<p:ajax event="valueChange" listener="#{subformulabean.selCemtSPChang}" process="@this" />
+						</p:selectOneMenu>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<h:outputText value="AggSP : " />
+					</p:column>
+					<p:column>
+						<p:selectOneMenu id="selAggSP"
+							value="#{subformulabean.selectedaggSPID}">
+							<f:selectItems value="#{subformulabean.aggSP}" var="agg"
+								itemLabel="#{agg.name}" itemValue="#{agg.id}" />
+							<p:ajax event="valueChange" listener="#{subformulabean.selAggSPChang}" process="@this" />
+						</p:selectOneMenu>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<h:outputText value="Stone : " />
+					</p:column>
+					<p:column>
+						<p:selectOneMenu id="selStone"
+							value="#{subformulabean.selectedStoneID}">
+							<f:selectItems value="#{subformulabean.stone}" var="stone"
+								itemLabel="#{stone.name}" itemValue="#{stone.id}" />
+							<p:ajax event="valueChange" listener="#{subformulabean.selStoneChang}" process="@this" />
+						</p:selectOneMenu>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<h:outputText value="Sand : " />
+					</p:column>
+					<p:column>
+						<p:selectOneMenu id="selSand"
+							value="#{subformulabean.selectedSandID}">
+							<f:selectItems value="#{subformulabean.sand}" var="sand"
+								itemLabel="#{sand.name}" itemValue="#{sand.id}" />
+							<p:ajax event="valueChange" listener="#{subformulabean.selSandChang}" process="@this" />
+						</p:selectOneMenu>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<p:commandButton value="บันทึก" icon="ui-icon-disk" actionListener="#{subformulabean.btnSaveClick}" update=":mainCenterForm" process="@this panelInput" oncomplete="if (args.validationFailed) {PF('newObjectDlg').show(); } else {PF('newObjectDlg').hide(); }"/>
+						<p:commandButton value="ยกเลิก" icon="ui-icon-close" onclick="PF('newObjectDlg').hide()"/>
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+		</p:dialog>
+	</ui:composition>
+</html>
+
+<!-- 
+<p:dialog id="newObjectDlg" header="เพิ่ม #{vasessionbean.programName}" widgetVar="newObjectDlg"  modal="true" appendTo="@(body)" width="700px" height="500px" closable="true">
 			<p:panelGrid id="panelInput">
 				<p:row>
 					<p:column>
@@ -195,5 +321,4 @@
 				</p:row>
 			</p:panelGrid>
 		</p:dialog>
-	</ui:composition>
-</html>
+ -->
