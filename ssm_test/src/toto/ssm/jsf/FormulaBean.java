@@ -22,6 +22,7 @@ import toto.ssm.session.VaSession;
 public class FormulaBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private List<Formula> master;
+	private Long selectedMasterID;
 	private List<Formula> slave;
 	private List<Customer> customers;
 	private Customer selectedCustomer;
@@ -38,9 +39,12 @@ public class FormulaBean implements Serializable {
 	private void init() {
 		cal = Calendar.getInstance();
 		customers = session.querryAllCustomer();
-		selectedCustomer = customers.get(0);
-		selectedCustomerID = selectedCustomer.getId();
-		master = session.querryAllMainFormularByCustomerID(selectedCustomerID);
+		if(customers.size() != 0) {
+			selectedCustomer = customers.get(0);
+			selectedCustomerID = selectedCustomer.getId();
+			master = session.querryAllMainFormularByCustomerID(selectedCustomerID);
+		}
+		
 		
 //		for(Formula m : master) {
 //			slave = session.querryAllFormularByMasterID(m.getId());
@@ -55,6 +59,19 @@ public class FormulaBean implements Serializable {
 	@PreDestroy
 	private void destroy() {
 		
+	}
+	
+	public void onAddNewSubFormula() {
+		System.out.println("onAddNewSubFormula 22222222222222");
+        // Add one new car to the table:
+//        Formula formula2Add = service.createCars(1).get(0);
+//        cars1.add(car2Add);
+//        FacesMessage msg = new FacesMessage("New Car added", car2Add.getId());
+//        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+	
+	public void selMasterChange() {
+		System.out.println("selMasterChange   5555555555555555555555");
 	}
 	
 	public void btnNewClick() {
@@ -170,5 +187,21 @@ public class FormulaBean implements Serializable {
 
 	public void setSelectedCustomerID(Long selectedCustomerID) {
 		this.selectedCustomerID = selectedCustomerID;
+	}
+
+	public Long getSelectedMasterID() {
+		return selectedMasterID;
+	}
+
+	public void setSelectedMasterID(Long selectedMasterID) {
+		this.selectedMasterID = selectedMasterID;
+	}
+
+	public Calendar getCal() {
+		return cal;
+	}
+
+	public void setCal(Calendar cal) {
+		this.cal = cal;
 	}
 }

@@ -60,9 +60,12 @@ public class SubFormulaBean implements Serializable {
 		selectedCustomer = customers.get(0);
 		selectedCustomerID = selectedCustomer.getId();
 		mainformulars = session.querryAllMainFormularByCustomerID(selectedCustomerID);
-		mainformular =mainformulars.get(0);
-		selectedmainformularID = mainformular.getId();
-		subFormulars = session.querryAllSubFormular(selectedmainformularID);
+		if(!mainformulars.isEmpty()) {
+			mainformular =mainformulars.get(0);
+			selectedmainformularID = mainformular.getId();
+			subFormulars = session.querryAllSubFormular(selectedmainformularID);
+		}
+		
 		
 		moists = session.querryAllMoist();
 		admixSP = session.querryAllAdmixSP();

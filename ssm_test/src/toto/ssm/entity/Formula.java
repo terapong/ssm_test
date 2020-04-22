@@ -1,6 +1,8 @@
 package toto.ssm.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
@@ -23,8 +25,26 @@ public class Formula implements Serializable {
 	@GeneratedValue(strategy=GenerationType.TABLE, generator="SSMGen")
 	private long id;
 
-	@Column(name="name")
-	private String name;
+	@Column(name="formula_name")
+	private String formulaName;
+	
+	@Column(name = "formula_code")
+	private String formulaCode;
+	
+	@Column(name="slump_test")
+	private String slumnCode;
+	
+	@Column(name="streng")
+	private String streng;
+	
+	@Column(name="duration")
+	private Integer Duration;
+	
+	@Column(name="price")
+	private BigDecimal price;
+	
+	@Column(name="detail")
+	private String detail;
 	
 	@Column(name="is_main")
 	private Boolean isMain;
@@ -144,12 +164,60 @@ public class Formula implements Serializable {
 		this.updateDate = updateDate;
 	}
 
-	public String getName() {
-		return name;
+	public String getFormulaName() {
+		return formulaName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setFormulaName(String formulaName) {
+		this.formulaName = formulaName;
+	}
+
+	public String getFormulaCode() {
+		return formulaCode;
+	}
+
+	public void setFormulaCode(String formulaCode) {
+		this.formulaCode = formulaCode;
+	}
+
+	public String getSlumnCode() {
+		return slumnCode;
+	}
+
+	public void setSlumnCode(String slumnCode) {
+		this.slumnCode = slumnCode;
+	}
+
+	public String getStreng() {
+		return streng;
+	}
+
+	public void setStreng(String streng) {
+		this.streng = streng;
+	}
+
+	public Integer getDuration() {
+		return Duration;
+	}
+
+	public void setDuration(Integer duration) {
+		Duration = duration;
+	}
+
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+
+	public String getDetail() {
+		return detail;
+	}
+
+	public void setDetail(String detail) {
+		this.detail = detail;
 	}
 
 	public Integer getValue() {

@@ -8,7 +8,7 @@
 	<ui:composition>
 		<p:panel closable="true" header="#{vasessionbean.programName}">
 		<p:ajax event="close" listener="#{menubean.handleClose}" update=":mainCenterForm" />
-		<p:panelGrid style="width: 85%">
+		<p:panelGrid style="width: 80%">
 			<p:row>
 				<p:column style="text-align: center">
 					<p:selectOneMenu id="selMaster"
@@ -21,7 +21,7 @@
 			</p:row>
 			<p:row>
 				<p:column>
-					<p:panelGrid style="width: 85%">
+					<p:panelGrid style="width: 80%">
 						<p:row>
 							<p:column>
 								<p:dataTable resizableColumns="true" id="tblEmployee" var="r" value="#{employeebean.slave}"
@@ -48,7 +48,7 @@
 										<h:outputText value="#{r.updateDate}" />
 									</p:column>
 									<p:column headerText="">
-										<p:commandLink value="แก้ไข"
+										<p:commandLink value="เพิ่มรหัสสูตร"
 											actionListener="#{employeebean.btnEditClick(r)}"
 											oncomplete="PF('newObjectDlg').show()" process="@this"
 											update=":mainCenterForm" resetValues="true" />

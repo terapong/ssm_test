@@ -37,7 +37,7 @@ public class MenuBean implements Serializable{
 	}
 	
 	public String subFormularClick() {
-		vaSessionbean.setProgramName("Sub formular data");
+		vaSessionbean.setProgramName("ข้อมูล สูตรย่อย");
 		vaSessionbean.setContentCenter("admin/SubFormular.xhtml");
 		return "main?facesRedirect=true";
 	}
@@ -98,7 +98,7 @@ public class MenuBean implements Serializable{
 	}
 	
 	public String formularClick() {
-		vaSessionbean.setProgramName("Formular data");
+		vaSessionbean.setProgramName("ข้อมูล สูตรหลัก");
 		vaSessionbean.setContentCenter("admin/formular.xhtml");
 		return "main?facesRedirect=true";
 	}

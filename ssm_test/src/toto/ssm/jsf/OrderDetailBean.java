@@ -39,10 +39,10 @@ public class OrderDetailBean implements Serializable {
 		master = session.querryAllOrder();
 		if(selectedMaster != null) {
 			selectedMaster = master.get(0);
-			//selectedRow = selectedMaster.getEmployees().get(0);
+			selectedMasterId = selectedMaster.getId();
+			slave = session.querryAllOrderDetailByOrderID(selectedMasterId);
+			
 		}
-		slave = session.querryAllOrderDetailByOrderID(selectedMaster.getId());
-		selectedMasterId = selectedMaster.getId();
 	}
 	
 	@PreDestroy

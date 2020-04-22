@@ -22,7 +22,7 @@
 						<p:selectOneMenu id="selMainFormular"
 							value="#{subformulabean.selectedmainformularID}">
 							<f:selectItems value="#{subformulabean.mainformulars}" var="mf"
-								itemLabel="#{mf.name}" itemValue="#{mf.id}" />
+								itemLabel="#{mf.formulaName}" itemValue="#{mf.id}" />
 							<p:ajax event="valueChange" listener="#{subformulabean.selMainformularChange}" update="tblSubFormula" process="@this" />
 						</p:selectOneMenu>
 					</p:column>
