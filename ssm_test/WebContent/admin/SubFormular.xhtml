@@ -89,7 +89,7 @@
 					</p:column>
 					<p:column>
 						<p:selectOneMenu id="selMoist"
-							value="#{subformulabean.selectedRow.moists}">
+							value="#{subformulabean.selectedMoistID}">
 							<f:selectItems value="#{subformulabean.moists}" var="mo"
 								itemLabel="#{mo.name}" itemValue="#{mo.id}" />
 							<p:ajax event="valueChange" listener="#{subformulabean.selMoistChang}" process="@this" />

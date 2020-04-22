@@ -132,45 +132,45 @@ public class SubFormulaBean implements Serializable {
 		init();
 	}
 	
-//	public void selMoistChang() {
-//		selectedRow.setMoists(moists);
-//		System.out.println("selMoistChang");
-//	}
-//	
-//	public void seladmixSPChang() {
-//		selectedRow.setAdmixSP(admixSP);
-//		System.out.println("seladmixSPChang");
-//	}
-//	
-//	public void selsiloChang() {
-//		selectedRow.setSilo(silo);
-//		System.out.println("selsiloChang");
-//	}
-//	
-//	public void selCemtMXChang() {
-//		selectedRow.setCemtMX(cemtMX);
-//		System.out.println("selCemtMXChang");
-//	}
-//	
-//	public void selCemtSPChang() {
-//		selectedRow.setCemtSP(cemtSP);
-//		System.out.println("selCemtSPChang");
-//	}
-//	
-//	public void selAggSPChang() {
-//		selectedRow.setAggSP(aggSP);
-//		System.out.println("selAggSPChang");
-//	}
-//	
-//	public void selSandChang() {
-//		selectedRow.setSand(sand);
-//		System.out.println("selSandChang");
-//	}
-//	
-//	public void selStoneChang() {
-//		selectedRow.setStone(stone);
-//		System.out.println("selStoneChang");
-//	}
+	public void selMoistChang() {
+		selectedRow.setMoist(selectedMoistID);
+		System.out.println("selMoistChang");
+	}
+	
+	public void seladmixSPChang() {
+		selectedRow.setAdmixSP(selectedAdmixSPID);
+		System.out.println("seladmixSPChang");
+	}
+	
+	public void selsiloChang() {
+		selectedRow.setSilo(SelectedSiloID);
+		System.out.println("selsiloChang");
+	}
+	
+	public void selCemtMXChang() {
+		selectedRow.setCemtMX(selectedCemtMXID);
+		System.out.println("selCemtMXChang");
+	}
+	
+	public void selCemtSPChang() {
+		selectedRow.setCemtSP(selectedCemtSPID);
+		System.out.println("selCemtSPChang");
+	}
+	
+	public void selAggSPChang() {
+		selectedRow.setAggSP(selectedaggSPID);
+		System.out.println("selAggSPChang");
+	}
+	
+	public void selSandChang() {
+		selectedRow.setSand(selectedSandID);
+		System.out.println("selSandChang");
+	}
+	
+	public void selStoneChang() {
+		selectedRow.setStone(selectedStoneID);
+		System.out.println("selStoneChang");
+	}
 
 	@PreDestroy
 	private void destroy() {
